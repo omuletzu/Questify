@@ -26,16 +26,16 @@ export const Header = () => {
                             onInit={(typewriter) => {
                                 typewriter
                                     .typeString('The place where ')
-                                    .typeString('<span style="color: blue;">answers</span>') // Color for "answers"
+                                    .typeString('<span style="color: blue;">answers</span>')
                                     .typeString(' raise ')
-                                    .typeString('<span style="color: blue;">questions</span>') // Color for "questions"
+                                    .typeString('<span style="color: blue;">questions</span>')
                                     .typeString('.')
                                     .pauseFor(1000)
-                                    .deleteChars(15) // Delete "answers"
-                                    .deleteChars(9) // Delete "questions"
-                                    .typeString('<span style="color: blue;">questions</span>') // Reverse position
+                                    .deleteChars(15)
+                                    .deleteChars(9) 
+                                    .typeString('<span style="color: blue;">questions</span>')
                                     .typeString(' raise ')
-                                    .typeString('<span style="color: blue;">answers</span>') // Reverse position
+                                    .typeString('<span style="color: blue;">answers</span>')
                                     .typeString('.')
                                     .start();
                             }}

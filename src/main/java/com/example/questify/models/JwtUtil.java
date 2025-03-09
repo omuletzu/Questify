@@ -3,13 +3,14 @@ package com.example.questify.models;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 
+@Component
 public class JwtUtil {
-    private final String SECRET_KEY = "";
 
     public String generateToken(String username) {
         Date now = new Date();
@@ -19,12 +20,12 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, System.getenv("SECRET_KEY"))
                 .compact();
     }
 
     public Claims getBody(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY)
+        return Jwts.parser().setSigningKey(System.getenv("SECRET_KEY"))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

@@ -1,5 +1,6 @@
-package com.example.questify.models;
+package com.example.questify.models.BetweenModels;
 
+import com.example.questify.models.CompositePK.QuestionVotesPK;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -7,21 +8,21 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-@IdClass(AnswerVotesPK.class)
-public class AnswerVotes {
+@IdClass(QuestionVotesPK.class)
+public class QuestionVotes {
     @Id
     private Long userId;
     @Id
-    private Long answerId;
+    private Long questionId;
     private Boolean upOrDown;
 
-    public AnswerVotes(Long userId, Long answerId, Boolean upOrDown) {
+    public QuestionVotes(Long userId, Long questionId, Boolean upOrDown) {
         this.userId = userId;
-        this.answerId = answerId;
+        this.questionId = questionId;
         this.upOrDown = upOrDown;
     }
 
-    public AnswerVotes() {
+    public QuestionVotes() {
 
     }
 
@@ -33,12 +34,12 @@ public class AnswerVotes {
         this.userId = userId;
     }
 
-    public Long getAnswerId() {
-        return answerId;
+    public Long getquestionId() {
+        return questionId;
     }
 
-    public void setAnswerId(Long answerId) {
-        this.answerId = answerId;
+    public void setquestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public Boolean getUpOrDown() {

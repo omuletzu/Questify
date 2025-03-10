@@ -1,5 +1,6 @@
-package com.example.questify.models;
+package com.example.questify.models.BetweenModels;
 
+import com.example.questify.models.CompositePK.AnswerImagePK;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;

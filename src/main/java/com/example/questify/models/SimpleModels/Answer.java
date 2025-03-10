@@ -1,4 +1,4 @@
-package com.example.questify.models;
+package com.example.questify.models.SimpleModels;
 
 import jakarta.persistence.*;
 

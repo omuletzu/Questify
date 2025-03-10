@@ -3,6 +3,7 @@ package com.example.questify.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -12,6 +13,9 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    @Value("${jwt.secret-key}")
+    private String secretKey;
+
     public String generateToken(String username) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + 1000 * 60 * 60);
@@ -20,12 +24,12 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS256, System.getenv("SECRET_KEY"))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     public Claims getBody(String token) {
-        return Jwts.parser().setSigningKey(System.getenv("SECRET_KEY"))
+        return Jwts.parser().setSigningKey(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

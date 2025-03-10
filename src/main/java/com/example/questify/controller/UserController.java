@@ -1,6 +1,6 @@
 package com.example.questify.controller;
 
-import com.example.questify.models.Users;
+import com.example.questify.models.SimpleModels.Users;
 import com.example.questify.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

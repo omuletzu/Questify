@@ -1,4 +1,4 @@
-package com.example.questify.models;
+package com.example.questify.models.CompositePK;
 
 import java.io.Serializable;
 import java.util.Objects;

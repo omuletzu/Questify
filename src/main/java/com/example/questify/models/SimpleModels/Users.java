@@ -1,4 +1,4 @@
-package com.example.questify.models;
+package com.example.questify.models.SimpleModels;
 
 import jakarta.persistence.*;
 
@@ -43,6 +43,10 @@ public class Users {
         this.banned = banned;
         this.email = email;
         this.phone = phone;
+    }
+
+    public Users() {
+
     }
 
     public Long getId() {

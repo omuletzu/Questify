@@ -15,10 +15,10 @@ public class Images {
             strategy = GenerationType.SEQUENCE,
             generator = "images_sequence"
     )
-    private int id;
+    private Long id;
     private byte[] imageData;
 
-    public Images(int id, byte[] imageData) {
+    public Images(Long id, byte[] imageData) {
         this.id = id;
         this.imageData = imageData;
     }
@@ -31,11 +31,11 @@ public class Images {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

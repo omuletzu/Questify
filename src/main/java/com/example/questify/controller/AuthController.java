@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<String> auth(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<Object> auth(@RequestBody AuthRequest authRequest) {
 
         String username = authRequest.getUsername();
         String password = authRequest.getPassword();
@@ -48,7 +49,8 @@ public class AuthController {
 
                 if(loginResult){
                     String jwtToken = jwtUtil.generateToken(username);
-                    return ResponseEntity.ok(jwtToken);
+                    Object returnData = List.of(jwtToken, searchForUsername.get());
+                    return ResponseEntity.ok(returnData);
                 }
                 else{
                     return ResponseEntity.badRequest().body("Wrong password");
@@ -79,7 +81,8 @@ public class AuthController {
 
                 if(saveUserStatus){
                     String jwtToken = jwtUtil.generateToken(username);
-                    return ResponseEntity.ok(jwtToken);
+                    Object returnData = List.of(jwtToken, newUser);
+                    return ResponseEntity.ok(returnData);
                 }
                 else{
                     return ResponseEntity.badRequest().body("Failed to create new user");

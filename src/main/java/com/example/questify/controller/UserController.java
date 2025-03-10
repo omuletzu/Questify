@@ -3,10 +3,7 @@ package com.example.questify.controller;
 import com.example.questify.models.SimpleModels.Users;
 import com.example.questify.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,4 +27,10 @@ public class UserController {
     public Optional<Users> getUserById(@RequestParam(name = "id") Long id) {
         return userService.getUserById(id);
     }
+
+    @GetMapping("/getByUsername")
+    public Optional<Users> getUsersByUsername(@RequestParam(name = "username") String username) {return userService.getUsersByUsername(username);}
+
+    @DeleteMapping("/remove")
+    public boolean removeUserById(@RequestParam(name = "id") Long id) {return userService.removeUserById(id);}
 }

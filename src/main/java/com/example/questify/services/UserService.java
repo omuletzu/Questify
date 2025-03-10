@@ -38,4 +38,18 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean removeUserById(Long id) {
+        try{
+            usersRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
+    public Optional<Users> getUsersByUsername(String username) {
+        return usersRepository.findUsersByUsername(username);
+    }
 }

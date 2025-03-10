@@ -17,4 +17,14 @@ public class UserService {
     public Optional<Users> getUserByUsername(String username) {
         return usersRepository.findUsersByUsername(username);
     }
+
+    public boolean createNewUser(Users user) {
+        try{
+            usersRepository.save(user);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
 }

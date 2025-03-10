@@ -18,28 +18,28 @@ public class Users {
     private Long id;
     private String username;
     private String password;
+    private String salt;
     private String email;
     private String phone;
-    private Double score;
     private Boolean banned;
     private Boolean isAdmin;
 
-    public Users(Long id, Boolean isAdmin, String username, String password, Double score, Boolean banned, String email, String phone) {
+    public Users(Long id, Boolean isAdmin, String username, String password, String salt, Boolean banned, String email, String phone) {
         this.id = id;
         this.isAdmin = isAdmin;
         this.username = username;
         this.password = password;
-        this.score = score;
+        this.salt = salt;
         this.banned = banned;
         this.email = email;
         this.phone = phone;
     }
 
-    public Users(String username, Boolean isAdmin, String password, Double score, Boolean banned, String email, String phone) {
+    public Users(String username, Boolean isAdmin, String password, String salt, Boolean banned, String email, String phone) {
         this.isAdmin = isAdmin;
         this.username = username;
         this.password = password;
-        this.score = score;
+        this.salt = salt;
         this.banned = banned;
         this.email = email;
         this.phone = phone;
@@ -73,12 +73,12 @@ public class Users {
         this.password = password;
     }
 
-    public Double getScore() {
-        return score;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setScore(Double score) {
-        this.score = score;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public Boolean getBanned() {

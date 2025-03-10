@@ -1,0 +1,4 @@
+CREATE TABLE Images(
+    id SERIAL PRIMARY KEY,
+    imageData BYTEA NOT NULL
+)

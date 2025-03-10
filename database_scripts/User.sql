@@ -1,0 +1,9 @@
+CREATE Table User(
+    id SERIAL PRIMARY KEY ,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL,
+    banned BOOLEAN NOT NULL DEFAULT FALSE,
+    isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
+);

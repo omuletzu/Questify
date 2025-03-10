@@ -1,4 +1,4 @@
-package com.example.questify.models;
+package com.example.questify.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -3,38 +3,34 @@ package com.example.questify.models;
 import java.time.LocalDateTime;
 
 public class Question {
-
     private Long id;
     private Long userId;
     private String title;
     private String text;
-    private String imageId;
     private int status;
     private LocalDateTime timestamp;
-    private String tags;
-    private Double score;
+    private int upVotes;
+    private int downVotes;
 
-    public Question(Long id, Long userId, String title, String text, String imageId, int status, LocalDateTime timestamp, String tags, Double score) {
+    public Question(Long id, Long userId, String title, String text, int status, LocalDateTime timestamp, int upVotes, int downVotes) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.text = text;
-        this.imageId = imageId;
         this.status = status;
         this.timestamp = timestamp;
-        this.tags = tags;
-        this.score = score;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
     }
 
-    public Question(Long userId, String title, String text, String imageId, int status, LocalDateTime timestamp, String tags, Double score) {
+    public Question(Long userId, String title, String text, int status, LocalDateTime timestamp, int upVotes, int downVotes) {
         this.userId = userId;
         this.title = title;
         this.text = text;
-        this.imageId = imageId;
         this.status = status;
         this.timestamp = timestamp;
-        this.tags = tags;
-        this.score = score;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
     }
 
     public Long getId() {
@@ -45,11 +41,11 @@ public class Question {
         this.id = id;
     }
 
-    public Long getuserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setuserId(Long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -69,14 +65,6 @@ public class Question {
         this.text = text;
     }
 
-    public String getimageId() {
-        return imageId;
-    }
-
-    public void setimageId(String imageId) {
-        this.imageId = imageId;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -93,19 +81,19 @@ public class Question {
         this.timestamp = timestamp;
     }
 
-    public String getTags() {
-        return tags;
+    public int getUpVotes() {
+        return upVotes;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setUpVotes(int upVotes) {
+        this.upVotes = upVotes;
     }
 
-    public Double getScore() {
-        return score;
+    public int getDownVotes() {
+        return downVotes;
     }
 
-    public void setScore(Double score) {
-        this.score = score;
+    public void setDownVotes(int downVotes) {
+        this.downVotes = downVotes;
     }
 }

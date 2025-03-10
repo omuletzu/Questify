@@ -1,0 +1,4 @@
+CREATE TABLE Tabs(
+    id SERIAL PRIMARY KEY,
+    tagName VARCHAR(255) NOT NULL
+)

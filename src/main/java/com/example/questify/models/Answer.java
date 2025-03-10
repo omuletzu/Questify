@@ -6,29 +6,29 @@ import java.time.LocalDateTime;
 public class Answer {
     private Long id;
     private Long userId;
-    private Long question_id;
+    private Long questionId;
     private String text;
-    private String imageId;
     private LocalDateTime timestamp;
-    private Double score;
+    private int upVotes;
+    private int downVotes;
 
-    public Answer(Long id, Long userId, Long question_id, String text, String imageId, LocalDateTime timestamp, Double score) {
+        public Answer(Long id, Long userId, Long questionId, String text, LocalDateTime timestamp, int upVotes, int downVotes) {
         this.id = id;
         this.userId = userId;
-        this.question_id = question_id;
+        this.questionId = questionId;
         this.text = text;
-        this.imageId = imageId;
         this.timestamp = timestamp;
-        this.score = score;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
     }
 
-    public Answer(Long userId, Long question_id, String text, String imageId, LocalDateTime timestamp, Double score) {
+    public Answer(Long userId, Long questionId, String text, LocalDateTime timestamp, int upVotes, int downVotes) {
         this.userId = userId;
-        this.question_id = question_id;
+        this.questionId = questionId;
         this.text = text;
-        this.imageId = imageId;
         this.timestamp = timestamp;
-        this.score = score;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
     }
 
     public Long getId() {
@@ -39,20 +39,20 @@ public class Answer {
         this.id = id;
     }
 
-    public Long getuserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setuserId(Long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Long getQuestion_id() {
-        return question_id;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion_id(Long question_id) {
-        this.question_id = question_id;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public String getText() {
@@ -63,14 +63,6 @@ public class Answer {
         this.text = text;
     }
 
-    public String getimageId() {
-        return imageId;
-    }
-
-    public void setimageId(String imageId) {
-        this.imageId = imageId;
-    }
-
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
@@ -79,11 +71,19 @@ public class Answer {
         this.timestamp = timestamp;
     }
 
-    public Double getScore() {
-        return score;
+    public int getUpVotes() {
+        return upVotes;
     }
 
-    public void setScore(Double score) {
-        this.score = score;
+    public void setUpVotes(int upVotes) {
+        this.upVotes = upVotes;
+    }
+
+    public int getDownVotes() {
+        return downVotes;
+    }
+
+    public void setDownVotes(int downVotes) {
+        this.downVotes = downVotes;
     }
 }

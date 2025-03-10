@@ -2,13 +2,13 @@ package com.example.questify.models;
 
 public class User {
     private Long id;
-    private Boolean isAdmin;
     private String username;
     private String password;
-    private Double score;
-    private Boolean banned;
     private String email;
     private String phone;
+    private Double score;
+    private Boolean banned;
+    private Boolean isAdmin;
 
     public User(Long id, Boolean isAdmin, String username, String password, Double score, Boolean banned, String email, String phone) {
         this.id = id;
@@ -87,11 +87,11 @@ public class User {
         this.phone = phone;
     }
 
-    public Boolean getIsAdmin() {
+    public Boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

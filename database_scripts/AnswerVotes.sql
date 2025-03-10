@@ -1,0 +1,8 @@
+CREATE TABLE AnswerVotes(
+    answerId INT NOT NULL,
+    userId INT NOT NULL,
+    upOrDown BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (answerId, userId),
+    FOREIGN KEY (answerId) REFERENCES Answer(id) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE
+)

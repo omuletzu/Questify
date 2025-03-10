@@ -1,6 +1,6 @@
 package com.example.questify.controller;
 
-import com.example.questify.models.User;
+import com.example.questify.models.Users;
 import com.example.questify.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +18,12 @@ public class UserController {
     }
 
     @GetMapping("getAll")
-    public List<User> getAllUsers() {
-
+    public List<Users> getAllUsers() {
+        return List.of();
     }
 
     @GetMapping("/get")
-    public User getUserById(Long id) {
-
+    public Users getUserById(Long id) {
+        return null;
     }
 }

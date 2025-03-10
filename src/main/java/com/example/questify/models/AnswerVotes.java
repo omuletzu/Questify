@@ -1,7 +1,17 @@
 package com.example.questify.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
+
+@Entity
+@Table
+@IdClass(AnswerVotesPK.class)
 public class AnswerVotes {
+    @Id
     private Long userId;
+    @Id
     private Long answerId;
     private Boolean upOrDown;
 
@@ -9,6 +19,10 @@ public class AnswerVotes {
         this.userId = userId;
         this.answerId = answerId;
         this.upOrDown = upOrDown;
+    }
+
+    public AnswerVotes() {
+
     }
 
     public Long getUserId() {

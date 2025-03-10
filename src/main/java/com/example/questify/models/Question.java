@@ -1,8 +1,22 @@
 package com.example.questify.models;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table
 public class Question {
+    @Id
+    @SequenceGenerator(
+            name = "question_sequence",
+            sequenceName = "question_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "question_sequence"
+    )
     private Long id;
     private Long userId;
     private String title;
@@ -31,6 +45,10 @@ public class Question {
         this.timestamp = timestamp;
         this.upVotes = upVotes;
         this.downVotes = downVotes;
+    }
+
+    public Question() {
+
     }
 
     public Long getId() {

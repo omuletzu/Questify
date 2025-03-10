@@ -1,6 +1,20 @@
 package com.example.questify.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table
 public class Images {
+    @Id
+    @SequenceGenerator(
+            name = "images_sequence",
+            sequenceName = "images_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "images_sequence"
+    )
     private int id;
     private byte[] imageData;
 
@@ -11,6 +25,10 @@ public class Images {
 
     public Images(byte[] imageData) {
         this.imageData = imageData;
+    }
+
+    public Images() {
+
     }
 
     public int getId() {

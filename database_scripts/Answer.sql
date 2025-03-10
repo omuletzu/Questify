@@ -6,6 +6,6 @@ CREATE TABLE Answer(
     timestamp TIMESTAMP NOT NULL,
     upVotes INT DEFAULT 0,
     downVotes INT DEFAULT 0,
-    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (questionId) REFERENCES Question(id) ON DELETE CASCADE
 );

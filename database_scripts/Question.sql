@@ -6,6 +6,6 @@ CREATE TABLE Question(
     status INT NOT NULL DEFAULT 0,
     timestamp TIMESTAMP NOT NULL,
     upVotes INT NOT NULL DEFAULT 0,
-    downVotes INT NOT NULL DEAFULT 0,
-    FOREIGN KEY (userId) REFERENCES User(id),
+    downVotes INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (userId) REFERENCES Users(id)
 )

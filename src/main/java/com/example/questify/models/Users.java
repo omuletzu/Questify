@@ -1,6 +1,20 @@
 package com.example.questify.models;
 
-public class User {
+import jakarta.persistence.*;
+
+@Entity
+@Table
+public class Users {
+    @Id
+    @SequenceGenerator(
+            name = "users_sequence",
+            sequenceName = "users_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "users_sequence"
+    )
     private Long id;
     private String username;
     private String password;
@@ -10,7 +24,7 @@ public class User {
     private Boolean banned;
     private Boolean isAdmin;
 
-    public User(Long id, Boolean isAdmin, String username, String password, Double score, Boolean banned, String email, String phone) {
+    public Users(Long id, Boolean isAdmin, String username, String password, Double score, Boolean banned, String email, String phone) {
         this.id = id;
         this.isAdmin = isAdmin;
         this.username = username;
@@ -21,7 +35,7 @@ public class User {
         this.phone = phone;
     }
 
-    public User(String username, Boolean isAdmin, String password, Double score, Boolean banned, String email, String phone) {
+    public Users(String username, Boolean isAdmin, String password, Double score, Boolean banned, String email, String phone) {
         this.isAdmin = isAdmin;
         this.username = username;
         this.password = password;

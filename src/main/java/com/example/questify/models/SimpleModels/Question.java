@@ -25,6 +25,8 @@ public class Question {
     private LocalDateTime timestamp;
     private int upVotes;
     private int downVotes;
+    @Transient
+    private int score;
 
     public Question(Long id, Long userId, String title, String text, int status, LocalDateTime timestamp, int upVotes, int downVotes) {
         this.id = id;
@@ -113,5 +115,13 @@ public class Question {
 
     public void setDownVotes(int downVotes) {
         this.downVotes = downVotes;
+    }
+
+    public int getScore() {
+        return upVotes - downVotes;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

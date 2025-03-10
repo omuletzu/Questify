@@ -16,7 +16,7 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    public List<Answer> getAnswers() {
-        return null;
+    public List<Answer> getAnswersByQuestionId(Long id) {
+        return answerRepository.findAnswerByQuestionId(id);
     }
 }

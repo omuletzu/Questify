@@ -2,10 +2,20 @@
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import Typewriter from 'typewriter-effect';
-
+import { useTheme } from "next-themes"
+import { useState, useEffect } from 'react'
 
 export const Header = () => {
+    const [mounted, setMounted] = useState(false);
+    const { theme, setTheme } = useTheme()
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if(!mounted)
+        return null
+
     return (
         <header className="bg-gray-300 h-20 w-full border-b-2 border-slate-200 px-4">
             <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
@@ -18,40 +28,12 @@ export const Header = () => {
                 <div>
                     <Button>Log in</Button>
                 </div>
-            </div>
-            <div className="min-h-screen flex flex-col">
-                <div className="flex-1 flex flex-col items-center justify-center">
-                    <div className="mb-15 text-5xl font-bold">
-                        <Typewriter
-                            onInit={(typewriter) => {
-                                typewriter
-                                    .typeString('The place where ')
-                                    .typeString('<span style="color: blue;">answers</span>')
-                                    .typeString(' raise ')
-                                    .typeString('<span style="color: blue;">questions</span>')
-                                    .typeString('.')
-                                    .pauseFor(1000)
-                                    .deleteChars(15)
-                                    .deleteChars(9) 
-                                    .typeString('<span style="color: blue;">questions</span>')
-                                    .typeString(' raise ')
-                                    .typeString('<span style="color: blue;">answers</span>')
-                                    .typeString('.')
-                                    .start();
-                            }}
-                            options={
-                                {
-                                    autoStart: true,
-                                    loop: false,
-                                    delay: 75
-                                }
-                            }
-                        />
-                    </div>
-                    <div className="mt-15 flex gap-5">
-                        <Button size="huge">Log in</Button>
-                        <Button size="huge">Sign in</Button>
-                    </div>
+                <div>
+                    <select value={theme} onChange={e => setTheme(e.target.value)}>
+                        <option value="system">System</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
                 </div>
             </div>
         </header>

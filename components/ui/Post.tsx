@@ -2,6 +2,7 @@
 
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Button } from "./button";
+import { CiMenuKebab } from "react-icons/ci";
 
 interface PostProps {
     id: number;
@@ -10,38 +11,43 @@ interface PostProps {
     author: string;
     text: string;
     status: number; //0="Sent" | 1="In progress" | 2="Solved";
-    tag: string;
+    tags?: string;
     timestamp: string;
     score: number;
     image?: string;
 }
 
-export const Post = ({ id, userId, title, author, text, status, tag, timestamp, score, image }: PostProps) => {
+export const Post = ({ id, userId, title, author, text, status, tags, timestamp, score, image }: PostProps) => {
     return (
-        <div className="p-4 bg-white shadow-md rounded-lg">
-            <div className="flex justify-between">
+        <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-full">
+            <div className="flex justify-between text-sm text-gray-600">
                 <h1>{author}</h1>
-                {status === 0 && (
-                    <h1>Sent</h1>
-                )}
-                {status === 1 && (
-                    <h1>In progress</h1>
-                )}
-                {status === 2 && (
-                    <h1>Solved</h1>
-                )}
+                <h1>{status === 0 ? "Sent" : status === 1 ? "In progress" : "Solved"}</h1>
                 <h1>{timestamp}</h1>
             </div>
-            <h2 className="text-bold text-3xl">{title}</h2>
-            <p>{text}</p>
-            <div className="flex justify-between">
-                <div className="p-5">
-                    <button><FaArrowUp /></button>
-                    <label>{score}</label>
-                    <button><FaArrowDown /></button>
+
+            <h2 className="font-bold text-2xl mt-2">{title}</h2>
+
+            {image && (
+                <div className="w-1/2 mx-auto mt-2">
+                    <img src={image} alt="image" className="w-full h-auto rounded-lg object-cover  " />
                 </div>
-                <Button>Comments</Button>
-                <button>⠇</button>
+            )}
+
+            <p className="mt-4">{text}</p>
+
+            <div className="flex justify-between items-center mt-4">
+                <div className="flex items-center gap-2">
+                    <button className="text-green-500"><FaArrowUp /></button>
+                    <label className="font-bold">{score}</label>
+                    <button className="text-red-500"><FaArrowDown /></button>
+                </div>
+                <Button size="sm" className="bg-gray-500 rounded-full">View post</Button>
+                <button className="text-gray-500 text-xl"><CiMenuKebab /></button>
+            </div>
+            
+            <div>
+                Tags:{tags}
             </div>
         </div>
     )

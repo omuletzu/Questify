@@ -33,4 +33,8 @@ public class QuestionTagsService {
     public List<QuestionTags> findAllQuestionTagsByTagId(Long tagId) {
         return questionTagsRepository.findAllByTagIdIs(tagId);
     }
+
+    public void deleteAllByQuestionId(Long questionId) {
+        questionTagsRepository.deleteAllByQuestionId(questionId);
+    }
 }

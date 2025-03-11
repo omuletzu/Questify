@@ -3,6 +3,10 @@ package com.example.questify.services;
 import com.example.questify.models.JpaRepository.QuestionRepository;
 import com.example.questify.models.SimpleModels.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +21,9 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public List<Question> getRecentNQuestions(int limit) {
-        return questionRepository.getRecentNQuestions(limit);
+    public List<Question> getRecentNQuestions(int pageNumber, int limit) {
+        Pageable pageable = PageRequest.of(pageNumber, limit, Sort.by(Sort.Order.desc("timestamp")));
+        return questionRepository.findAllByOrderByTimestampDesc(pageable).getContent();
     }
 
     public Optional<Question> getQuestionById(Long id) {
@@ -51,5 +56,19 @@ public class QuestionService {
 
     public List<Question> filterByUserId(Long userId) {
         return questionRepository.findAllById(userId);
+    }
+
+    public boolean editQuestion(Question question) {
+        try {
+            questionRepository.save(question);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public List<Question> getQuestionByUserId(Long userId) {
+        return questionRepository.findAllByUserId(userId);
     }
 }

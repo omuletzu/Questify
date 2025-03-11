@@ -9,4 +9,11 @@ import java.util.Optional;
 
 public interface AnswerVoteRepository extends JpaRepository<AnswerVotes, AnswerVotesPK> {
     public Optional<AnswerVotes> findByAnswerIdAndUserId(Long answerId, Long userId);
+
+    public long countByUpOrDownTrueAndUserId(Long userId);
+    public long countByUpOrDownFalseAndUserId(Long userId);
+
+    public long countByUpOrDownTrueAndAnswerId(Long questionId);
+
+    public long countByUpOrDownFalseAndAnswerId(Long questionId);
 }

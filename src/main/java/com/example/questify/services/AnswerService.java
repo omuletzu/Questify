@@ -44,4 +44,8 @@ public class AnswerService {
             return false;
         }
     }
+
+    public List<Answer> getAnswerByUserId(Long userId) {
+        return answerRepository.findAllByUserId(userId);
+    }
 }

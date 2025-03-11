@@ -9,7 +9,9 @@ import com.example.questify.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,19 +47,20 @@ public class QuestionController {
     }
 
     @GetMapping("/getRecent")
-    public List<Question> getQuestions(@RequestBody QuestionGetRecentRequest questionGetRecentRequest) {
-        int limit = questionGetRecentRequest.getLimit();
-        return questionService.getRecentNQuestions(limit);
+    public List<Question> getQuestions(@RequestParam(name = "limit") int limit, @RequestParam(name = "pageNumber") int pageNumber) {
+        return questionService.getRecentNQuestions(pageNumber, limit);
     }
 
     @GetMapping("/getFiltered")
-    public List<Question> getFilteredQuestions(@RequestBody QuestionFilterRequest questionFilterRequest) {
-        int option = questionFilterRequest.getOption();
+    public List<Question> getFilteredQuestions(
+            @RequestParam(name = "option") int option,
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "tag", required = false) String tag,
+            @RequestParam(name = "username", required = false) String username,
+            @RequestParam(name = "userId", required = false) Long userId) {
 
         switch (option) {
             case 0 : {
-                String tag = questionFilterRequest.getTag();
-
                 Optional<Tags> findTag = tagsService.searchForTag(tag);
 
                 if(findTag.isEmpty()){
@@ -77,13 +80,10 @@ public class QuestionController {
             }
 
             case 1 : {
-                String title = questionFilterRequest.getTitle();
                 return questionService.filterBySubtitle(title);
             }
 
             case 2 : {
-                String username = questionFilterRequest.getUsername();
-
                 List<Users> findUsers = userService.findAllUsersByUsername(username);
 
                 List<Question> questionsList = new ArrayList<Question>();
@@ -97,19 +97,18 @@ public class QuestionController {
             }
 
             default : {
-                Long userId = questionFilterRequest.getUserId();
                 return questionService.filterByUserId(userId);
             }
         }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addQuestion(@RequestBody QuestionAddRequest questionAddRequest) {
-        Long userId = questionAddRequest.getUserId();
-        String title = questionAddRequest.getTitle();
-        String text = questionAddRequest.getText();
-        List<byte[]> images = questionAddRequest.getImages();
-        List<String> tags = questionAddRequest.getTags();
+    public ResponseEntity<String> addQuestion(
+            @RequestParam("userId") Long userId,
+            @RequestParam("title") String title,
+            @RequestParam("text") String text,
+            @RequestParam(value = "images", required = false) List<MultipartFile> images,
+            @RequestParam(value = "tags", required = false) List<String> tags) throws IOException {
 
         Question question = new Question(
                 userId,
@@ -127,38 +126,44 @@ public class QuestionController {
             return ResponseEntity.badRequest().body("Error storing question");
         }
 
-        for (byte[] bytes : images) {
-            Images image = new Images(bytes);
+        if(images != null) {
+            for (MultipartFile image64base : images) {
+                byte[] imageConvertedToByte = image64base.getBytes();
 
-            saveStatus = imagesService.addImage(image);
+                Images image = new Images(imageConvertedToByte);
 
-            if(!saveStatus) {
-                return ResponseEntity.badRequest().body("Error storing images");
-            }
+                saveStatus = imagesService.addImage(image);
 
-            QuestionImages questionImages = new QuestionImages(
-                    question.getId(),
-                    image.getId()
-            );
+                if(!saveStatus) {
+                    return ResponseEntity.badRequest().body("Error storing images");
+                }
 
-            saveStatus = questionImagesService.addQuestionImage(questionImages);
+                QuestionImages questionImages = new QuestionImages(
+                        question.getId(),
+                        image.getId()
+                );
 
-            if(!saveStatus) {
-                return ResponseEntity.badRequest().body("Error storing relation images question");
+                saveStatus = questionImagesService.addQuestionImage(questionImages);
+
+                if(!saveStatus) {
+                    return ResponseEntity.badRequest().body("Error storing relation images question");
+                }
             }
         }
 
-        for (String string : tags) {
-            if(!string.isEmpty()) {
-                Tags tag = new Tags(string);
+        if(tags != null) {
+            for (String string : tags) {
+                if(!string.isEmpty()) {
+                    Tags tag = new Tags(string);
 
-                Optional<Tags> searchForTag = tagsService.searchForTag(string);
+                    Optional<Tags> searchForTag = tagsService.searchForTag(string);
 
-                if(searchForTag.isEmpty()){
-                    saveStatus = tagsService.addTag(tag);
+                    if(searchForTag.isEmpty()){
+                        saveStatus = tagsService.addTag(tag);
 
-                    if(!saveStatus) {
-                        return ResponseEntity.badRequest().body("Error storing tag");
+                        if(!saveStatus) {
+                            return ResponseEntity.badRequest().body("Error storing tag");
+                        }
                     }
                 }
             }
@@ -168,13 +173,13 @@ public class QuestionController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<String> editQuestion(@RequestBody QuestionEditRequest questionEditRequest) {
-        Long questionId = questionEditRequest.getId();
-        String title = questionEditRequest.getTitle();
-        String text = questionEditRequest.getText();
-        int status = questionEditRequest.getStatus();   // status 0 - received, 1 - progess, 2 - solved
-        List<byte[]> images = questionEditRequest.getImages();
-        List<Tags> tags = questionEditRequest.getTags();
+    public ResponseEntity<String> editQuestion(
+            @RequestParam("id") Long questionId,
+            @RequestParam("title") String title,
+            @RequestParam("text") String text,
+            @RequestParam("status") int status,
+            @RequestParam(value = "images", required = false) List<MultipartFile> images,
+            @RequestParam(value = "tags", required = false) List<String> tags) throws IOException {
 
         if(status == 2) {
             return ResponseEntity.badRequest().body("Question is solved");
@@ -199,23 +204,49 @@ public class QuestionController {
             imagesService.deleteById(imageId);
         }
 
-        for (byte[] bytes : images) {
-            Images image = new Images(bytes);
-            boolean saveStatus = imagesService.addImage(image);
+        if(images != null) {
+            for (MultipartFile image64base : images) {
+                byte[] imageConvertedToByte = image64base.getBytes();
 
-            if(!saveStatus){
-                return ResponseEntity.badRequest().body("Error storing the new images");
+                Images image = new Images(imageConvertedToByte);
+                boolean saveStatus = imagesService.addImage(image);
+
+                if(!saveStatus){
+                    return ResponseEntity.badRequest().body("Error storing the new images");
+                }
+
+                QuestionImages questionImagesToAdd = new QuestionImages(
+                        questionId,
+                        image.getId()
+                );
+
+                saveStatus = questionImagesService.addQuestionImage(questionImagesToAdd);
+
+                if(!saveStatus) {
+                    return ResponseEntity.badRequest().body("Error storing the relation image question");
+                }
             }
+        }
 
-            QuestionImages questionImagesToAdd = new QuestionImages(
-                    questionId,
-                    image.getId()
-            );
+        List<QuestionTags> questionTags = questionTagsService.findAllQuestionTagsByQuestionId(questionId);
+        questionTagsService.deleteAllByQuestionId(questionId);
 
-            saveStatus = questionImagesService.addQuestionImage(questionImagesToAdd);
+        if(tags != null) {
+            for(String tagName : tags) {
+                Tags tag = new Tags(tagName);
 
-            if(!saveStatus) {
-                return ResponseEntity.badRequest().body("Error storing the relation image question");
+                Optional<Tags> searchForTag = tagsService.searchForTag(tagName);
+
+                if(searchForTag.isEmpty()) {
+                    tagsService.addTag(tag);
+                }
+
+                QuestionTags questionTagsToAdd = new QuestionTags(tag.getId(), questionId);
+                boolean saveStatus = questionTagsService.addQuestionTags(questionTagsToAdd);
+
+                if(!saveStatus) {
+                    return ResponseEntity.badRequest().body("Error editing tags");
+                }
             }
         }
 
@@ -223,9 +254,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteQuestionById(@RequestBody QuestionDeleteRequest questionDeleteRequest) {
-        Long questionId = questionDeleteRequest.getId();
-
+    public ResponseEntity<String> deleteQuestionById(@RequestParam(name = "questionId") Long questionId) {
         List<QuestionImages> questionImages = questionImagesService.findAllQuestionImagesByQuestionId(questionId);
 
         for (QuestionImages questionImage : questionImages) {
@@ -253,10 +282,7 @@ public class QuestionController {
     }
 
     @PutMapping("/voteUp")
-    public ResponseEntity<String> voteQuestionUp(@RequestBody QuestionVoteRequest questionVoteRequest) {
-        Long questionId = questionVoteRequest.getQuestionId();
-        Long userId = questionVoteRequest.getUserId();
-
+    public ResponseEntity<String> voteQuestionUp(@RequestParam(name = "questionId") Long questionId, @RequestParam(name = "userId") Long userId) {
         Optional<QuestionVotes> questionVotes = questionVotesService.findQuestionVote(questionId, userId);
 
         if(questionVotes.isEmpty()) {
@@ -286,10 +312,7 @@ public class QuestionController {
     }
 
     @PutMapping("/voteDown")
-    public ResponseEntity<String> voteQuestionDown(@RequestBody QuestionVoteRequest questionVoteRequest) {
-        Long questionId = questionVoteRequest.getQuestionId();
-        Long userId = questionVoteRequest.getUserId();
-
+    public ResponseEntity<String> voteQuestionDown(@RequestParam(name = "questionId") Long questionId, @RequestParam(name = "userId") Long userId) {
         Optional<QuestionVotes> questionVotes = questionVotesService.findQuestionVote(questionId, userId);
 
         if(questionVotes.isEmpty()) {

@@ -56,4 +56,8 @@ public class UserService {
     public List<Users> findAllUsersByUsername(String username) {
         return usersRepository.findAllByUsername(username);
     }
+
+    public void banUserById(Long userId, boolean banned) {
+        usersRepository.updateIsActive(userId, banned);
+    }
 }

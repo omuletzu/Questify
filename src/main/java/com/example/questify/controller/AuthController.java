@@ -30,12 +30,11 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<Object> auth(@RequestBody AuthRequest authRequest) {
-
-        String username = authRequest.getUsername();
-        String password = authRequest.getPassword();
-        String action = authRequest.getAction();
-
+    public ResponseEntity<Object> auth(@RequestParam(name = "username") String username,
+                                       @RequestParam(name = "password") String password,
+                                       @RequestParam(name = "action") String action,
+                                       @RequestParam(name = "email", required = false) String email,
+                                       @RequestParam(name = "phone", required = false) String phone) {
         Optional<Users> searchForUsername = userService.getUserByUsername(username);
 
         if(action.equals("login")){
@@ -43,6 +42,11 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("User not found");
             }
             else{
+
+                if(searchForUsername.get().getBanned()){
+                    return ResponseEntity.badRequest().body("User banned");
+                }
+
                 boolean loginResult = authService.verifyPassword(password,
                         searchForUsername.get().getPassword(),
                         searchForUsername.get().getSalt());
@@ -62,9 +66,6 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("User already existing");
             }
             else{
-                String email = authRequest.getEmail();
-                String phone = authRequest.getPhone();
-
                 String[] hashedPasswordAndSalt = authService.getHashedPasswordAndSalt(password);
 
                 Users newUser = new Users(

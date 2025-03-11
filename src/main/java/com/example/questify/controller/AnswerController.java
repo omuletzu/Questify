@@ -6,14 +6,13 @@ import com.example.questify.models.Requests.AnswerDeleteRequest;
 import com.example.questify.models.Requests.AnswerEditRequest;
 import com.example.questify.models.Requests.AnswerVoteRequest;
 import com.example.questify.models.SimpleModels.*;
-import com.example.questify.services.AnswerImagesService;
-import com.example.questify.services.AnswerService;
-import com.example.questify.services.AnswerVotesService;
-import com.example.questify.services.ImagesService;
+import com.example.questify.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -26,32 +25,53 @@ public class AnswerController {
     private ImagesService imagesService;
     private AnswerImagesService answerImagesService;
     private AnswerVotesService answerVotesService;
+    private QuestionService questionService;
 
     @Autowired
     public AnswerController(AnswerService answerService,
                             ImagesService imagesService,
                             AnswerImagesService answerImagesService,
-                            AnswerVotesService answerVotesService){
+                            AnswerVotesService answerVotesService,
+                            QuestionService questionService){
         this.answerService = answerService;
         this.imagesService = imagesService;
         this.answerImagesService = answerImagesService;
-        this.answerImagesService = answerImagesService;
+        this.answerVotesService = answerVotesService;
+        this.questionService = questionService;
     }
 
     @GetMapping("/getForQuestion")
-    public List<Answer> getAnswersForQuestionId(@RequestParam(name = "id") Long id) {
-        List<Answer> answers = answerService.getAnswersByQuestionId(id);
-        answers.sort(Comparator.comparing(Answer::getTimestamp).reversed());
+    public List<Answer> getAnswersForQuestionId(@RequestParam(name = "questionId") Long questionId) {
+        List<Answer> answers = answerService.getAnswersByQuestionId(questionId);
+        answers.sort(Comparator.comparing(Answer::getScore).reversed());
         return answers;
     }
 
     @PostMapping("/addForQuestion")
-    public ResponseEntity<String> addAnswerForQuestionId(@RequestBody AnswerRequest answerRequest) {
+    public ResponseEntity<String> addAnswerForQuestionId(@RequestParam(name = "userId") Long userId,
+                                                         @RequestParam(name = "questionId") Long questionId,
+                                                         @RequestParam(name = "text") String text,
+                                                         @RequestParam(name = "images", required = false) List<MultipartFile> images) throws IOException {
+        Optional<Question> question = questionService.getQuestionById(questionId);
 
-        Long userId = answerRequest.getUserId();
-        Long questionId = answerRequest.getQuestionId();
-        String text = answerRequest.getText();
-        List<byte[]> images = answerRequest.getImages();
+        if(question.isEmpty()){
+            return ResponseEntity.badRequest().body("Error getting question by id");
+        }
+
+        int questionStatus = question.get().getStatus();
+
+        if(questionStatus == 2) {
+            return ResponseEntity.badRequest().body("Error caused by question solved");
+        }
+
+        if(questionStatus == 0) {
+            question.get().setStatus(1);
+            boolean saveStatus = questionService.editQuestion(question.get());
+
+            if(!saveStatus) {
+                return ResponseEntity.badRequest().body("Error modifying question status");
+            }
+        }
 
         Answer answer = new Answer(
                 userId,
@@ -69,8 +89,10 @@ public class AnswerController {
         }
 
         if(images != null) {
-            for (byte[] bytes : images) {
-                Images image = new Images(bytes);
+            for (MultipartFile image64base : images) {
+                byte[] imageConvertedToByte = image64base.getBytes();
+
+                Images image = new Images(imageConvertedToByte);
 
                 status = imagesService.addImage(image);
 
@@ -92,12 +114,9 @@ public class AnswerController {
     }
 
     @PutMapping("/editById")
-    public ResponseEntity<String> editAnswerById(@RequestBody AnswerEditRequest answerEditRequest) {
-
-        Long id = answerEditRequest.getId();
-        String text = answerEditRequest.getText();
-        List<byte[]> images = answerEditRequest.getImages();
-
+    public ResponseEntity<String> editAnswerById(@RequestParam(name = "id") Long id,
+                                                 @RequestParam(name = "text") String text,
+                                                 @RequestParam(name = "images", required = false) List<MultipartFile> images) throws IOException {
         Optional<Answer> answer = answerService.getAnswerById(id);
 
         if(answer.isEmpty()){
@@ -118,21 +137,25 @@ public class AnswerController {
             imagesService.deleteById(answerImages.getImageId());
         }
 
-        for(int i = 0; i < images.size(); i++) {
-            Images image = new Images(images.get(i));
+        if(images != null) {
+            for (MultipartFile multipartFile : images) {
+                byte[] imageConvertedToByte = multipartFile.getBytes();
 
-            boolean status = imagesService.addImage(image);
+                Images image = new Images(imageConvertedToByte);
 
-            if(!status){
-                return ResponseEntity.badRequest().body("Error storing image");
-            }
+                boolean status = imagesService.addImage(image);
 
-            AnswerImages answerImages = new AnswerImages(answer.get().getId(), image.getId());
+                if (!status) {
+                    return ResponseEntity.badRequest().body("Error storing image");
+                }
 
-            status = answerImagesService.addAnswerImages(answerImages);
+                AnswerImages answerImages = new AnswerImages(answer.get().getId(), image.getId());
 
-            if(!status) {
-                return ResponseEntity.badRequest().body("Error storing relation image answer");
+                status = answerImagesService.addAnswerImages(answerImages);
+
+                if (!status) {
+                    return ResponseEntity.badRequest().body("Error storing relation image answer");
+                }
             }
         }
 
@@ -140,13 +163,11 @@ public class AnswerController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteAnswerById(@RequestBody AnswerDeleteRequest answerDeleteRequest) {
-        Long answerId = answerDeleteRequest.getId();
-
+    public ResponseEntity<String> deleteAnswerById(@RequestParam(name = "answerId") Long answerId) {
         List<AnswerImages> answerImages = answerImagesService.getAllImagesId(answerId);
 
-        for(int i = 0; i < answerImages.size(); i++) {
-            imagesService.deleteById(answerImages.get(i).getImageId());
+        for (AnswerImages answerImage : answerImages) {
+            imagesService.deleteById(answerImage.getImageId());
         }
 
         boolean deleteStatus = answerService.deleteAnswerById(answerId);
@@ -159,10 +180,8 @@ public class AnswerController {
     }
 
     @PutMapping("/voteUp")
-    public ResponseEntity<String> voteQuestionUp(@RequestBody AnswerVoteRequest answerVoteRequest) {
-        Long answerId = answerVoteRequest.getAnswerId();
-        Long userId = answerVoteRequest.getUserId();
-
+    public ResponseEntity<String> voteQuestionUp(@RequestParam(name = "answerId") Long answerId,
+                                                 @RequestParam(name = "userId") Long userId) {
         Optional<AnswerVotes> answerVotes = answerVotesService.findAnswerVote(answerId, userId);
 
         if(answerVotes.isEmpty()) {
@@ -192,10 +211,8 @@ public class AnswerController {
     }
 
     @PutMapping("/voteDown")
-    public ResponseEntity<String> voteQuestionDown(@RequestBody AnswerVoteRequest answerVoteRequest) {
-        Long answerId = answerVoteRequest.getAnswerId();
-        Long userId = answerVoteRequest.getUserId();
-
+    public ResponseEntity<String> voteQuestionDown(@RequestParam(name = "answerId") Long answerId,
+                                                   @RequestParam(name = "userId") Long userId) {
         Optional<AnswerVotes> answerVotes = answerVotesService.findAnswerVote(answerId, userId);
 
         if(answerVotes.isEmpty()) {

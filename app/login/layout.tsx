@@ -1,6 +1,5 @@
-
-
-import { Header } from "../header";
+import { ForumHeader } from "@/components/ui/forumHeader";
+import { Header } from "../../components/ui/header";
 
 type Props = {
     children: React.ReactNode;
@@ -9,8 +8,8 @@ type Props = {
 const Layout = ({ children }: Props) => {
     return (
         <div className="bg-gray-200 min-h-screen flex flex-col">
-            {/* <Header /> */}
-            <main className="flex-1 flex flex-col items-center justify-center">
+            <ForumHeader />
+            <main className="flex-1 flex flex-col items-start justify-items-start">
                 {children}
             </main>
         </div>

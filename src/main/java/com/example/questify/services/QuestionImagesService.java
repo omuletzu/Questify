@@ -5,6 +5,8 @@ import com.example.questify.models.JpaRepository.QuestionImagesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QuestionImagesService {
     private QuestionImagesRepository questionImagesRepository;
@@ -22,5 +24,13 @@ public class QuestionImagesService {
         catch (Exception e) {
             return false;
         }
+    }
+
+    public List<QuestionImages> findAllQuestionImagesByQuestionId(Long questionId) {
+        return questionImagesRepository.findAllByQuestionId(questionId);
+    }
+
+    public void deleteAllQuestionImagesByQuestionId(Long questionId) {
+        questionImagesRepository.deleteAllByQuestionId(questionId);
     }
 }

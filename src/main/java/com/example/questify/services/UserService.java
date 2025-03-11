@@ -52,4 +52,8 @@ public class UserService {
     public Optional<Users> getUsersByUsername(String username) {
         return usersRepository.findUsersByUsername(username);
     }
+
+    public List<Users> findAllUsersByUsername(String username) {
+        return usersRepository.findAllByUsername(username);
+    }
 }

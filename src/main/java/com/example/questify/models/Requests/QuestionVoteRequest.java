@@ -1,4 +1,4 @@
-package com.example.questify.models.SimpleModels;
+package com.example.questify.models.Requests;
 
 public class QuestionVoteRequest {
     private Long userId;

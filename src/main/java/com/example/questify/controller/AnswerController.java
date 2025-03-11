@@ -2,7 +2,9 @@ package com.example.questify.controller;
 
 import com.example.questify.models.BetweenModels.AnswerImages;
 import com.example.questify.models.BetweenModels.AnswerVotes;
-import com.example.questify.models.BetweenModels.QuestionVotes;
+import com.example.questify.models.Requests.AnswerDeleteRequest;
+import com.example.questify.models.Requests.AnswerEditRequest;
+import com.example.questify.models.Requests.AnswerVoteRequest;
 import com.example.questify.models.SimpleModels.*;
 import com.example.questify.services.AnswerImagesService;
 import com.example.questify.services.AnswerService;
@@ -13,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -133,6 +134,25 @@ public class AnswerController {
             if(!status) {
                 return ResponseEntity.badRequest().body("Error storing relation image answer");
             }
+        }
+
+        return ResponseEntity.ok("Success");
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteAnswerById(@RequestBody AnswerDeleteRequest answerDeleteRequest) {
+        Long answerId = answerDeleteRequest.getId();
+
+        List<AnswerImages> answerImages = answerImagesService.getAllImagesId(answerId);
+
+        for(int i = 0; i < answerImages.size(); i++) {
+            imagesService.deleteById(answerImages.get(i).getImageId());
+        }
+
+        boolean deleteStatus = answerService.deleteAnswerById(answerId);
+
+        if(!deleteStatus) {
+            return ResponseEntity.badRequest().body("Error deleting answer");
         }
 
         return ResponseEntity.ok("Success");

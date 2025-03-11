@@ -1,21 +1,23 @@
-package com.example.questify.models.SimpleModels;
+package com.example.questify.models.Requests;
 
-import java.time.LocalDateTime;
+import com.example.questify.models.SimpleModels.Tags;
+
 import java.util.List;
 
-public class QuestionAddRequest {
-    private Long userId;
+public class QuestionEditRequest {
+    private Long id;
     private String title;
     private String text;
+    private int status;
     private List<byte[]> images;
-    private List<String> tags;
+    private List<Tags> tags;
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -34,6 +36,14 @@ public class QuestionAddRequest {
         this.text = text;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public List<byte[]> getImages() {
         return images;
     }
@@ -42,11 +52,11 @@ public class QuestionAddRequest {
         this.images = images;
     }
 
-    public List<String> getTags() {
+    public List<Tags> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tags> tags) {
         this.tags = tags;
     }
 }

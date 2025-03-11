@@ -12,4 +12,9 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = "SELECT * FROM question ORDER BY timestamp DESC LIMIT :limit", nativeQuery = true)
     public List<Question> getRecentNQuestions(@Param("limit") int limit);
+
+    @Query(value = "SELECT * FROM question WHERE title LIKE %:subtitle%", nativeQuery = true)
+    public List<Question> filterBySubtitle(String subtitle);
+
+    public List<Question> findAllById(Long id);
 }

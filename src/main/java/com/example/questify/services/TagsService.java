@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TagsService {
@@ -26,7 +27,17 @@ public class TagsService {
         }
     }
 
-    public List<Tags> searchForTag(String tag) {
-        return tagsRepository.findAllByTagName(tag);
+    public Optional<Tags> searchForTag(String tag) {
+        return tagsRepository.findByTagName(tag);
+    }
+
+    public boolean deleteTagById(Long id) {
+        try {
+            tagsRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }

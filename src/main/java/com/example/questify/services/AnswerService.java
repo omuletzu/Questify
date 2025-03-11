@@ -34,4 +34,14 @@ public class AnswerService {
     public Optional<Answer> getAnswerById(Long id) {
         return answerRepository.findById(id);
     }
+
+    public boolean deleteAnswerById(Long id) {
+        try {
+            answerRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
 }

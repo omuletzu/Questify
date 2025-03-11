@@ -5,6 +5,8 @@ import com.example.questify.models.JpaRepository.QuestionTagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QuestionTagsService {
     private QuestionTagsRepository questionTagsRepository;
@@ -22,5 +24,13 @@ public class QuestionTagsService {
         catch (Exception e) {
             return false;
         }
+    }
+
+    public List<QuestionTags> findAllQuestionTagsByQuestionId(Long questionId) {
+        return questionTagsRepository.findAllByQuestionId(questionId);
+    }
+
+    public List<QuestionTags> findAllQuestionTagsByTagId(Long tagId) {
+        return questionTagsRepository.findAllByTagIdIs(tagId);
     }
 }

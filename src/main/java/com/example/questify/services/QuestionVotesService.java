@@ -40,19 +40,19 @@ public class QuestionVotesService {
         }
     }
 
-    public long countByUpOrDownTrueByUserId(Long userId){
-        return questionVotesRepository.countByUpOrDownTrueAndUserId(userId);
+    public long countByUpDownTrueByUserId(Long userId){
+        return questionVotesRepository.countByUpDownTrueAndUserId(userId);
     }
 
-    public long countByUpOrDownFalseByUserId(Long userId){
-        return questionVotesRepository.countByUpOrDownFalseAndUserId(userId);
+    public long countByUpDownFalseByUserId(Long userId){
+        return questionVotesRepository.countByUpDownFalseAndUserId(userId);
     }
 
-    public long countByUpOrDownTrueByQuestionId(Long questionId) {
-        return questionVotesRepository.countByUpOrDownTrueAndQuestionId(questionId);
+    public long countByUpDownTrueByQuestionId(Long questionId) {
+        return questionVotesRepository.countByUpDownTrueAndQuestionId(questionId);
     }
 
-    public long countByUpOrDownFalseByQuestionId(Long questionId) {
-        return questionVotesRepository.countByUpOrDownFalseAndQuestionId(questionId);
+    public long countByUpDownFalseByQuestionId(Long questionId) {
+        return questionVotesRepository.countByUpDownFalseAndQuestionId(questionId);
     }
 }

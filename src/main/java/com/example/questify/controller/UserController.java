@@ -66,16 +66,16 @@ public class UserController {
         double finalScore = 0.0;
 
         for (Question question : questionListByUser) {
-            finalScore += 2.5 * questionVotesService.countByUpOrDownTrueByQuestionId(question.getId());
-            finalScore -= 1.5 * questionVotesService.countByUpOrDownFalseByQuestionId(question.getId());
+            finalScore += 2.5 * questionVotesService.countByUpDownTrueByQuestionId(question.getId());
+            finalScore -= 1.5 * questionVotesService.countByUpDownFalseByQuestionId(question.getId());
         }
 
         for(Answer answer : answerListByUser) {
-            finalScore += 5 * answerVotesService.countByUpOrDownTrueByAnswerId(answer.getId());
-            finalScore -= 2.5 * answerVotesService.countByUpOrDownFalseByAnswerId(answer.getId());
+            finalScore += 5 * answerVotesService.countByUpDownTrueByAnswerId(answer.getId());
+            finalScore -= 2.5 * answerVotesService.countByUpDownFalseByAnswerId(answer.getId());
         }
 
-        long numberOfAnswerVotesDown = answerVotesService.countByUpOrDownFalseByUserId(id);
+        long numberOfAnswerVotesDown = answerVotesService.countByUpDownFalseByUserId(id);
         finalScore -= 1.5 * numberOfAnswerVotesDown;
 
         return finalScore;

@@ -14,12 +14,12 @@ public class QuestionVotes {
     private Long userId;
     @Id
     private Long questionId;
-    private Boolean upOrDown;
+    private Boolean upDown;
 
     public QuestionVotes(Long userId, Long questionId, Boolean upOrDown) {
         this.userId = userId;
         this.questionId = questionId;
-        this.upOrDown = upOrDown;
+        this.upDown = upOrDown;
     }
 
     public QuestionVotes() {
@@ -42,11 +42,11 @@ public class QuestionVotes {
         this.questionId = questionId;
     }
 
-    public Boolean getUpOrDown() {
-        return upOrDown;
+    public Boolean getUpDown() {
+        return upDown;
     }
 
-    public void setUpOrDown(Boolean upOrDown) {
-        this.upOrDown = upOrDown;
+    public void setUpDown(Boolean upOrDown) {
+        this.upDown = upOrDown;
     }
 }

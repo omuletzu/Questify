@@ -11,11 +11,11 @@ import jakarta.persistence.Table;
 @IdClass(QuestionImagesPK.class)
 public class QuestionImages {
     @Id
-    private int questionId;
+    private Long questionId;
     @Id
-    private int imageId;
+    private Long imageId;
 
-    public QuestionImages(int questionId, int imageId) {
+    public QuestionImages(Long questionId, Long imageId) {
         this.questionId = questionId;
         this.imageId = imageId;
     }
@@ -24,19 +24,19 @@ public class QuestionImages {
 
     }
 
-    public int getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(int questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
-    public int getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(Long imageId) {
         this.imageId = imageId;
     }
 }

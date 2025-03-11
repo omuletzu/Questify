@@ -19,4 +19,14 @@ public class QuestionService {
     public List<Question> getRecentNQuestions(int limit) {
         return questionRepository.getRecentNQuestions(limit);
     }
+
+    public boolean addQuestion(Question question) {
+        try{
+            questionRepository.save(question);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
 }

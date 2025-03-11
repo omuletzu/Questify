@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/auth")
 public class AuthController {
     private AuthService authService;
     private UserService userService;
@@ -29,7 +29,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/auth")
+    @PostMapping("/connect")
     public ResponseEntity<Object> auth(@RequestParam(name = "username") String username,
                                        @RequestParam(name = "password") String password,
                                        @RequestParam(name = "action") String action,
@@ -38,6 +38,9 @@ public class AuthController {
         Optional<Users> searchForUsername = userService.getUserByUsername(username);
 
         if(action.equals("login")){
+
+            System.out.println(username);
+
             if(searchForUsername.isEmpty()) {
                 return ResponseEntity.badRequest().body("User not found");
             }
@@ -90,5 +93,14 @@ public class AuthController {
                 }
             }
         }
+    }
+
+    @GetMapping("/checkToken")
+    public ResponseEntity<String> checkToken(String token) {
+        if(jwtUtil.isValid(token)) {
+            return ResponseEntity.ok("Valid");
+        }
+
+        return ResponseEntity.badRequest().body("Invalid");
     }
 }

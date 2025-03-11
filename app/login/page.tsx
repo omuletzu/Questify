@@ -9,7 +9,7 @@ export default function ForumPage() {
         <div className="flex">
 
             {/* sidebar */}
-            <aside className={`fixed left-0 h-full bg-gray-500 transition-all duration-300 ease-in-out ${isOpen ? "w-[300px]" : "w-[50px]"}`}>
+            <aside className={`fixed left-0 h-full bg-gray-300 transition-all duration-300 ease-in-out ${isOpen ? "w-[300px]" : "w-[50px]"}`}>
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className="absolute top-4 right-4"
@@ -31,8 +31,15 @@ export default function ForumPage() {
             </aside>
 
 
-            {/* postari */}
             <main className={`transition-all duration-300 ease-in-out flex-1 p-6 ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
+                {/* meniu add, search, filter*/}
+                <div className={`flex justify-around space-x-6 transition-all duration-300 ease-in-out flex-1 p-6 ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
+                    <button className="px-6 bg-gray-400 rounded-md">+ Add</button>
+                    <button className="px-6 bg-gray-400 rounded-md">Search</button>
+                    <button className="px-6 bg-gray-400 rounded-md">Filter</button>
+                </div>
+
+                {/* postari */}
                 {/* <h1 className="text-3xl font-bold"></h1> */}
                 <div className="mt-4 space-y-4">
                     <div className="p-4 bg-white shadow-md rounded-lg">

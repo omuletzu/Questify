@@ -19,7 +19,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        user: "bg-primary bg-gray-100 text-primary-foreground shadow-xs hover:bg-gray-300"
+        user: "bg-primary bg-gray-100 text-primary-foreground shadow-xs hover:bg-gray-300",
+        loginBtn: "h-15 w-100 rounded-lg px-6 has-[>svg]:px-4 bg- text-primary-foreground bg-blue-600",
+        signBtn: "h-15 w-100 rounded-lg px-6 has-[>svg]:px-4 bg-primary text-primary-foreground"
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -27,6 +29,7 @@ const buttonVariants = cva(
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
         huge: "h-15 w-30 rounded-lg px-6 has-[>svg]:px-4",
+        huge2: "h-15 w-[400px] rounded-lg px-6 has-[>svg]:px-4"
       },
     },
     defaultVariants: {

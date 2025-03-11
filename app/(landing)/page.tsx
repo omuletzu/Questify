@@ -5,9 +5,9 @@ import Typewriter from 'typewriter-effect';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-[400px] flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="mb-15 text-5xl font-bold">
+        <div className="mb-20 text-5xl font-bold">
           <Typewriter
             onInit={(typewriter) => {
               typewriter
@@ -34,9 +34,9 @@ export default function Home() {
             }
           />
         </div>
-        <div className="mt-15 flex gap-5">
-          <Button size="huge">Log in</Button>
-          <Button size="huge">Sign in</Button>
+        <div className="mt-15 flex flex-col gap-5">
+          <Button variant="loginBtn" size="huge2" className="text-lg hover:bg-blue-700">Log in</Button>
+          <Button variant="signBtn" className="text-lg hover:bg-gray-800" size="huge2">Sign in</Button>
         </div>
       </div>
     </div>

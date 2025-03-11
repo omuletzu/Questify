@@ -15,7 +15,7 @@ export const Header = () => {
                     </h1>
                 </div>
                 <div>
-                    <Button>Log in</Button>
+                    <Button>About Us</Button>
                 </div>
             </div>
         </header>

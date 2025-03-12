@@ -40,14 +40,14 @@ public class AnswerController {
         this.questionService = questionService;
     }
 
-    @GetMapping("/getForQuestion")
+    @GetMapping("/getByQuestionId")
     public List<Answer> getAnswersForQuestionId(@RequestParam(name = "questionId") Long questionId) {
         List<Answer> answers = answerService.getAnswersByQuestionId(questionId);
         answers.sort(Comparator.comparing(Answer::getScore).reversed());
         return answers;
     }
 
-    @PostMapping("/addForQuestion")
+    @PostMapping("/addForQuestionId")
     public ResponseEntity<String> addAnswerForQuestionId(@RequestParam(name = "userId") Long userId,
                                                          @RequestParam(name = "questionId") Long questionId,
                                                          @RequestParam(name = "text") String text,
@@ -162,7 +162,7 @@ public class AnswerController {
         return ResponseEntity.ok("Success");
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deleteById")
     public ResponseEntity<String> deleteAnswerById(@RequestParam(name = "answerId") Long answerId) {
         List<AnswerImages> answerImages = answerImagesService.getAllImagesId(answerId);
 
@@ -179,7 +179,7 @@ public class AnswerController {
         return ResponseEntity.ok("Success");
     }
 
-    @PutMapping("/voteUp")
+    @PutMapping("/voteUpById")
     public ResponseEntity<String> voteQuestionUp(@RequestParam(name = "answerId") Long answerId,
                                                  @RequestParam(name = "userId") Long userId) {
         Optional<AnswerVotes> answerVotes = answerVotesService.findAnswerVote(answerId, userId);
@@ -210,7 +210,7 @@ public class AnswerController {
         }
     }
 
-    @PutMapping("/voteDown")
+    @PutMapping("/voteDownById")
     public ResponseEntity<String> voteQuestionDown(@RequestParam(name = "answerId") Long answerId,
                                                    @RequestParam(name = "userId") Long userId) {
         Optional<AnswerVotes> answerVotes = answerVotesService.findAnswerVote(answerId, userId);

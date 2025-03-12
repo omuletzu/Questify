@@ -172,7 +172,7 @@ public class QuestionController {
         return ResponseEntity.ok("Success");
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/editById")
     public ResponseEntity<String> editQuestion(
             @RequestParam("id") Long questionId,
             @RequestParam("title") String title,
@@ -253,7 +253,7 @@ public class QuestionController {
         return ResponseEntity.ok("Success");
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deleteById")
     public ResponseEntity<String> deleteQuestionById(@RequestParam(name = "questionId") Long questionId) {
         List<QuestionImages> questionImages = questionImagesService.findAllQuestionImagesByQuestionId(questionId);
 
@@ -281,7 +281,7 @@ public class QuestionController {
         return ResponseEntity.ok("Success");
     }
 
-    @PutMapping("/voteUp")
+    @PutMapping("/voteUpById")
     public ResponseEntity<String> voteQuestionUp(@RequestParam(name = "questionId") Long questionId, @RequestParam(name = "userId") Long userId) {
         Optional<QuestionVotes> questionVotes = questionVotesService.findQuestionVote(questionId, userId);
 
@@ -311,7 +311,7 @@ public class QuestionController {
         }
     }
 
-    @PutMapping("/voteDown")
+    @PutMapping("/voteDownById")
     public ResponseEntity<String> voteQuestionDown(@RequestParam(name = "questionId") Long questionId, @RequestParam(name = "userId") Long userId) {
         Optional<QuestionVotes> questionVotes = questionVotesService.findQuestionVote(questionId, userId);
 

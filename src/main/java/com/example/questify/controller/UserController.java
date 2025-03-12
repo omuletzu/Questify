@@ -55,10 +55,10 @@ public class UserController {
         userService.banUserById(id, false);
     }
 
-    @DeleteMapping("/remove")
+    @DeleteMapping("/removeById")
     public boolean removeUserById(@RequestParam(name = "id") Long id) {return userService.removeUserById(id);}
 
-    @GetMapping("/score")
+    @GetMapping("/scoreById")
     public Double computeUserScore(@RequestParam(name = "id") Long id) {
         List<Question> questionListByUser = questionService.getQuestionByUserId(id);
         List<Answer> answerListByUser = answerService.getAnswerByUserId(id);

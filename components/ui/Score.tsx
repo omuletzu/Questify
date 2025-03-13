@@ -21,26 +21,16 @@ export const ScoreLabel = () => {
             return;
         }
 
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(url, {
-                    params: { userId },
-                });
+        axios.get(url)
+            .then((response) => {
+                setScore(response.data)
+                setLoading(false)
+            })
 
-                if (response.data && typeof response.data === "number") {
-                    setScore(response.data);
-                } else {
-                    setError("Invalid score data received");
-                }
-            } catch (err) {
-                console.error("Error fetching score:", err);
-                setError("Failed to fetch score");
-            } finally {
+            .catch((err) => {
+                setError(err.message);
                 setLoading(false);
-            }
-        };
-
-        fetchData();
+            })
     }, []);
 
     if (loading) {

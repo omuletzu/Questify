@@ -1,5 +1,8 @@
 "use client"
 
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Post } from "@/components/ui/Post";
 import { ScoreLabel } from "@/components/ui/Score";
 import { useTheme } from "next-themes";
@@ -7,6 +10,8 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { Checkbox, FormControlLabel } from '@mui/material';
+import { CiImageOn } from "react-icons/ci";
 
 interface PostProps {
     userId: number;
@@ -21,6 +26,9 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
     const [mounted, setMounted] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+    const [isAddDropdownOpen, setIsAddDropdownOpen] = useState(false);
+
 
     useEffect(() => {
         setMounted(true)
@@ -31,6 +39,14 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
+    }
+
+    const toggleFilterDropdown = () => {
+        setIsFilterDropdownOpen(!isFilterDropdownOpen)
+    }
+
+    const toggleAddDropdown = () => {
+        setIsAddDropdownOpen(!isAddDropdownOpen)
     }
 
     return (
@@ -117,11 +133,85 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 <main className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
                     {/* meniu add, search, filter*/}
                     <div className="flex justify-center space-x-6 p-6">
-                        <button
-                            onClick={() => { }}
-                            className="px-6 bg-gray-400 rounded-md hover:bg-gray-300">
-                            + Add
-                        </button>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <button
+                                    onClick={toggleAddDropdown}
+                                    className="px-6 bg-gray-400 rounded-md hover:bg-gray-300"
+                                >
+                                    + Add
+                                </button>
+                            </DialogTrigger>
+
+                            <DialogContent className="flex flex-col items-start justify-start sm:max-w-[425px] lg:max-w-[1000px] lg:h-[500px] ">
+                                <DialogHeader>
+                                    <DialogTitle>{"Add a new Question"}</DialogTitle>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="title" className="text-sm font-medium leading-none text-right">
+                                            Title*
+                                        </label>
+                                        <Input
+                                            id="title"
+                                            // value={username}
+                                            // onChange={(e) => setUsername(e.target.value)}
+                                            placeholder="Question Title"
+                                            className="col-span-3 focus:outline-none"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="text" className="text-sm font-medium leading-none text-right focus:outline-none">
+                                            Question Description*
+                                        </label>
+                                        <textarea
+                                            id="text"
+                                            // value={password}
+                                            // onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="Write a description"
+                                            className="col-span-3 p-4 border border-gray-300 rounded-md resize-none focus:outline-none"
+                                            rows={6}
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="tags" className="text-sm font-medium leading-none text-right">
+                                            Tags separated by commas
+                                        </label>
+                                        <Input
+                                            id="tags"
+                                            // value={password}
+                                            // onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="Put 1 or more tags"
+                                            className="col-span-3"
+                                        />
+                                    </div>
+
+                                </div>
+                                {/* {error && <p className="text-red-500">{error}</p>} */}
+                                <div className="grid grid-cols-4 items-center gap-12">
+                                    <Button
+                                        onClick={() => { }}
+                                        className="bg-blue-900 text-white px-4 py-2 rounded-md flex items-center space-x-2"
+                                    >
+                                        <span>Add Image</span>
+                                        <CiImageOn
+                                            className=""
+                                        />
+                                    </Button>
+                                </div>
+
+                                <div className="h-[200px] flex items-center justify-center">
+                                    <Button
+                                        onClick={() => { }}
+                                        className="text-white px-4 py-2 rounded-md"
+                                    >
+                                        Add Question
+                                    </Button>
+                                </div>
+
+                            </DialogContent>
+                        </Dialog>
+
                         <form className="w-[400px] relative">
                             <div className="relative">
                                 <input
@@ -135,7 +225,59 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                             </div>
                         </form>
 
-                        <button className="px-6 bg-gray-400 rounded-md hover:bg-gray-300">Filter</button>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <button
+                                    onClick={toggleFilterDropdown}
+                                    className="px-6 bg-gray-400 rounded-md hover:bg-gray-300"
+                                >
+                                    Filter
+                                </button>
+                            </DialogTrigger>
+
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                    <DialogTitle>{"Filter the Posts"}</DialogTitle>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="tags" className="text-sm font-medium leading-none text-right">
+                                            Tags
+                                        </label>
+                                        <Input
+                                            id="tags"
+                                            // value={username}
+                                            // onChange={(e) => setUsername(e.target.value)}
+                                            placeholder="Search by 1 tag"
+                                            className="col-span-3"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="searchUser" className="text-sm font-medium leading-none text-right">
+                                            Seach by User
+                                        </label>
+                                        <Input
+                                            id="searchUser"
+                                            // value={password}
+                                            // onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="Enter username"
+                                            className="col-span-3"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <label htmlFor="searchUser" className="text-sm font-medium leading-none text-right">
+                                            Show Only My Posts
+                                        </label>
+                                        <Checkbox />
+                                    </div>
+
+                                </div>
+                                {/* {error && <p className="text-red-500">{error}</p>} */}
+                                <Button onClick={() => { }}>
+                                    Filter
+                                </Button>
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
                     {/* postari */}

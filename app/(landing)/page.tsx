@@ -18,31 +18,33 @@ export default function Home() {
 
   const handleAuth = async () => {
     try {
-      const response = await fetch("http://localhost:3000/auth/connect", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username,
-          password,
-          action1: isSignUp ? "signup" : "login",
-          email: isSignUp ? email : undefined,
-          phone: isSignUp ? phone : undefined,
-        }),
-      });
+      // const response = await fetch("http://localhost:3000/auth/connect", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //     username,
+      //     password,
+      //     action: isSignUp ? "signup" : "login",
+      //     email: isSignUp ? email : undefined,
+      //     phone: isSignUp ? phone : undefined,
+      //   }),
+      // });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || "An error occurred");
-        return;
-      }
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   setError(errorData.message || "An error occurred");
+      //   return;
+      // }
 
-      const data = await response.json();
-      console.log(data);
-      alert(isSignUp ? "Signup successful" : "Login successful");
+      // const data = await response.json();
+      // console.log(data);
+      // alert(isSignUp ? "Signup successful" : "Login successful");
 
-      setIsAuthModalOpen(false);
+      // setIsAuthModalOpen(false);
+
+
     } catch (eroare: any) {
       setError(eroare.message || "An error occurred");
 

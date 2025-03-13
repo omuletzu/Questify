@@ -27,7 +27,7 @@ export const Post = ({ id, userId, title, author, text, status, tags, timestamp,
             <div className="flex justify-between text-sm text-gray-600">
                 <h1>{author}</h1>
                 <h1>{status === 0 ? "Sent" : status === 1 ? "In progress" : "Solved"}</h1>
-                <h1>{timestamp}</h1>
+                <h1 className="z-15">{timestamp}</h1>
             </div>
 
             <h2 className="font-bold text-2xl mt-2">{title}</h2>

@@ -18,6 +18,10 @@ interface PostProps {
 }
 
 export const Post = ({ id, userId, title, author, text, status, tags, timestamp, score, image }: PostProps) => {
+    const handleViewPost = () => {
+        
+    }
+
     return (
         <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-full">
             <div className="flex justify-between text-sm text-gray-600">
@@ -42,13 +46,20 @@ export const Post = ({ id, userId, title, author, text, status, tags, timestamp,
                     <label className="font-bold">{score}</label>
                     <button className="text-red-500"><FaArrowDown /></button>
                 </div>
-                <Button size="sm" className="bg-gray-500 rounded-full">View post</Button>
-                <button className="text-gray-500 text-xl"><CiMenuKebab /></button>
+                <Button
+                    onClick={() => { }}
+                    size="sm"
+                    className="bg-gray-500 rounded-full"
+                >
+                    View post
+                </Button>
+
+                <button className="text-gray-500 text-xl rounded-md"><CiMenuKebab /></button>
             </div>
-            
-            <div>
-                Tags:{tags}
-            </div>
+
+            <button>
+                Tags: <span className="bg-gray-500 text-white rounded-full p-1 space-x-6">{tags}</span>
+            </button>
         </div>
     )
 }

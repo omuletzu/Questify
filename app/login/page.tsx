@@ -140,7 +140,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
                     {/* postari */}
                     {/* <h1 className="text-3xl font-bold"></h1> */}
-                    <div className="space-y-5">
+                    <div className="space-y-6">
                         <Post id={5} userId={3} title="Postarea nr 1" author="User12341" text={text1} status={2} tags=" C" timestamp="11 Mar 2025" score={5} image="/logo.png" />
                         <Post id={6} userId={1} title="Postarea nr 2" author="User001" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." status={1} tags="JS" timestamp="12 Mar 2025" score={7} />
                         <Post id={7} userId={2} title="Postarea nr 3" author="User002" text="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." status={0} tags="React" timestamp="12 Mar 2025" score={4} />

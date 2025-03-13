@@ -137,9 +137,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 </aside>
 
                 <main className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
-                    {/* meniu add, search, filter*/}
-
-
                     {/* postari */}
                     <div className="mt-8">
                         <div className="space-y-6">

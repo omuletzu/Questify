@@ -42,7 +42,7 @@ export default function Home() {
       const [jwtToken, userResponse] = (await response).data;
 
       localStorage.setItem("jwtToken", jwtToken);
-      localStorage.setItem("id", userResponse.id);
+      localStorage.setItem("userId", userResponse.id);
       localStorage.setItem("username", userResponse.username);
       localStorage.setItem("email", userResponse.email);
       localStorage.setItem("phone", userResponse.phone);

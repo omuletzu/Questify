@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Typewriter from 'typewriter-effect';
+import axios from 'axios';
 
 export default function Home() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -18,36 +19,29 @@ export default function Home() {
 
   const handleAuth = async () => {
     try {
-      // const response = await fetch("http://localhost:3000/auth/connect", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({
-      //     username,
-      //     password,
-      //     action: isSignUp ? "signup" : "login",
-      //     email: isSignUp ? email : undefined,
-      //     phone: isSignUp ? phone : undefined,
-      //   }),
-      // });
+      const url = "http://localhost:8079/auth/connect";
+      const userData = {
+        'action': isSignUp ? "register" : "login",
+        'username': username,
+        'password': password,
+        'email': isSignUp ? email : "",
+        'phone': isSignUp ? phone : ""
+      };
 
-      // if (!response.ok) {
-      //   const errorData = await response.json();
-      //   setError(errorData.message || "An error occurred");
-      //   return;
-      // }
+      console.log(url);
 
-      // const data = await response.json();
-      // console.log(data);
-      // alert(isSignUp ? "Signup successful" : "Login successful");
+      const response = axios.post(url, userData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 
-      // setIsAuthModalOpen(false);
+      const [jwtToken, userReponse] = (await response).data;
 
+      //TODO mesaj in functie de logat cu succes sau nu
 
     } catch (eroare: any) {
       setError(eroare.message || "An error occurred");
-
     }
   }
 

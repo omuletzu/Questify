@@ -21,7 +21,11 @@ export const ScoreLabel = () => {
             return;
         }
 
-        axios.get(url)
+        axios
+            .get(url, {
+                params: { 'userId': userId }
+            }
+            )
             .then((response) => {
                 setScore(response.data)
                 setLoading(false)

@@ -8,10 +8,27 @@ import { useState } from "react"
 
 export const AddPostButton = () => {
     const [isAddDropdownOpen, setIsAddDropdownOpen] = useState(false);
+    const [title, setTitle] = useState("")
+    const [text, setText] = useState("")
+    const [tags, setTags] = useState("")
+
 
     const toggleAddDropdown = () => {
         setIsAddDropdownOpen(!isAddDropdownOpen)
     }
+
+    const handleAddQuestion = () => {
+        const tagList = tags.split(/[ ,;]+/);
+
+        const url = "hhtps://localhost:8080/question/add"
+        const questionData = {
+            'userId': localStorage.get("userId"),
+            'title': title,
+            'text': text,
+
+        }
+    }
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -33,8 +50,8 @@ export const AddPostButton = () => {
                         </label>
                         <Input
                             id="title"
-                            // value={username}
-                            // onChange={(e) => setUsername(e.target.value)}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             placeholder="Question Title"
                             className="col-span-3 focus:outline-none"
                         />
@@ -45,8 +62,8 @@ export const AddPostButton = () => {
                         </label>
                         <textarea
                             id="text"
-                            // value={password}
-                            // onChange={(e) => setPassword(e.target.value)}
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
                             placeholder="Write a description"
                             className="col-span-3 p-4 border border-gray-300 rounded-md resize-none focus:outline-none"
                             rows={6}
@@ -58,8 +75,8 @@ export const AddPostButton = () => {
                         </label>
                         <Input
                             id="tags"
-                            // value={password}
-                            // onChange={(e) => setPassword(e.target.value)}
+                            value={tags}
+                            onChange={(e) => setTags(e.target.value)}
                             placeholder="Put 1 or more tags"
                             className="col-span-3"
                         />
@@ -81,7 +98,7 @@ export const AddPostButton = () => {
 
                 <div className="h-[200px] flex items-center justify-center">
                     <Button
-                        onClick={() => { }}
+                        onClick={handleAddQuestion}
                         className="text-white px-4 py-2 rounded-md"
                     >
                         Add Question

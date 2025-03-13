@@ -15,6 +15,7 @@ import { CiImageOn } from "react-icons/ci";
 import { AddPostButton } from "@/components/ui/AddPostButton";
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
+import { UserSettings } from "@/components/ui/UserSettings";
 
 interface PostProps {
     userId: number;
@@ -79,32 +80,9 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                     {/* todo */}
                     <span className="text-sm font-medium text-gray-700">User123</span>
 
-                    <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-                        <button
-                            onClick={toggleDropdown}
-                            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 transition-all"
-                        >
-                            <FaUser size={24} className="text-gray-800" />
-                        </button>
+                    <UserSettings />
 
-                        {/* todo: modal,nu dropdown pt user settings */}
-                        {isDropdownOpen && (
-                            <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                                <ul className="py-2">
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                                            Setări cont
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                                            Log out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        )}
-                    </div>
+
                 </div>
             </header>
 

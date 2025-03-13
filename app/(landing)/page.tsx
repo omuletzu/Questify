@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Typewriter from 'typewriter-effect';
 import axios from 'axios';
+import { useRouter } from "next/navigation"
 
 export default function Home() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -16,6 +17,8 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const handleAuth = async () => {
     try {
@@ -36,9 +39,15 @@ export default function Home() {
         }
       });
 
-      const [jwtToken, userReponse] = (await response).data;
+      const [jwtToken, userResponse] = (await response).data;
 
-      //TODO mesaj in functie de logat cu succes sau nu
+      localStorage.setItem("jwtToken", jwtToken);
+      localStorage.setItem("id", userResponse.id);
+      localStorage.setItem("username", userResponse.username);
+      localStorage.setItem("email", userResponse.email);
+      localStorage.setItem("phone", userResponse.phone);
+
+      router.push("/home");
 
     } catch (eroare: any) {
       setError(eroare.message || "An error occurred");

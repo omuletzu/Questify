@@ -8,9 +8,17 @@ export const ScoreLabel = () => {
     useEffect(() => {
         const fetchScore = async () => {
             try {
-                const response = await fetch("...");        //api de la backend - TODO
+                const userId = localStorage.getItem("userId");
+                if (!userId) {
+                    console.error("User ID is missing");
+                    return;
+                }
+                const response = await fetch(`http://localhost:3000/users/scoreById?id=${userId}`);
+                if (!response.ok) throw new Error("Server error");
+
+                //api de la backend - TODO
                 const data = await response.json();
-                setScore(data.score);
+                setScore(data);
             }
             catch (error) {
                 console.error("Nu se poate afisa scorul, eroare: ", error);

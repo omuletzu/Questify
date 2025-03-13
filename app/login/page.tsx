@@ -1,6 +1,5 @@
 "use client"
 
-import { FollowList } from "@/components/ui/FollowList";
 import { Post } from "@/components/ui/Post";
 import { ScoreLabel } from "@/components/ui/Score";
 import { useTheme } from "next-themes";
@@ -118,8 +117,11 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 <main className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
                     {/* meniu add, search, filter*/}
                     <div className="flex justify-center space-x-6 p-6">
-                        <button className="px-6 bg-gray-400 rounded-md hover:bg-gray-300">+ Add</button>
-
+                        <button
+                            onClick={() => { }}
+                            className="px-6 bg-gray-400 rounded-md hover:bg-gray-300">
+                            + Add
+                        </button>
                         <form className="w-[400px] relative">
                             <div className="relative">
                                 <input

@@ -33,22 +33,11 @@ interface Question {
 export default function ForumPage({ userId, userScore }: PostProps) {
     const [isOpen, setIsOpen] = useState(true);
     const router = useRouter();
-
-    const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-
     const [mounted, setMounted] = useState(false);
 
     const [username, setUsername] = useState("");
     const [pageIndex, setPageIndex] = useState(0);
     const [questionList, setQuestionList] = useState<Question[]>([]);
-
-    const handleLogoClick = () => {
-        router.push("/home")
-    }
-
-    const handleHomeButton = () => {
-        router.push("/home")
-    }
 
     const fetchPosts = async () => {
         const url = "http://localhost:8080/question/getRecent";
@@ -86,7 +75,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 <div className="flex items-center space-x-2">
                     <button
                         className="rounded-full"
-                        onClick={handleLogoClick}
+                        onClick={() => router.push("/home")}
                     >
                         <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
                     </button>
@@ -140,7 +129,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                                 <li>
                                     <button
                                         className="block w-full p-4 text-left hover:bg-gray-400 rounded-md"
-                                        onClick={handleHomeButton}
+                                        onClick={() => router.push("/home")}
                                     >
                                         Home</button>
                                 </li>

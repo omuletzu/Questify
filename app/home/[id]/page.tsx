@@ -3,7 +3,6 @@
 import { AddPostButton } from "@/components/ui/AddPostButton"
 import { Comments } from "@/components/ui/Comments"
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton"
-import { Post } from "@/components/ui/Post"
 import { ScoreLabel } from "@/components/ui/Score"
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar"
 import { UserSettings } from "@/components/ui/UserSettings"
@@ -18,14 +17,6 @@ export default function ViewPostPage() {
     const [mounted, setMounted] = useState(false);
     const [username, setUsername] = useState("");
     const router = useRouter();
-
-    const handleLogoClick = () => {
-        router.push("/home")
-    }
-
-    const handleHomeButton = () => {
-        router.push("/home")
-    }
 
     useEffect(() => {
         setMounted(true)
@@ -42,7 +33,7 @@ export default function ViewPostPage() {
                 <div className="flex items-center space-x-2">
                     <button
                         className="rounded-full"
-                        onClick={handleLogoClick}
+                        onClick={() => router.push("/home")}
                     >
                         <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
                     </button>
@@ -94,7 +85,7 @@ export default function ViewPostPage() {
                                 <li>
                                     <button
                                         className="block w-full p-4 text-left hover:bg-gray-400 rounded-md"
-                                        onClick={handleHomeButton}
+                                        onClick={() => router.push("/home")}
                                     >
                                         Home</button>
                                 </li>

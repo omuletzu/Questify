@@ -139,7 +139,6 @@ export const AddPostButton = () => {
                         Add Question
                     </Button>
                 </div>
-
                 <Toaster />
             </DialogContent>
         </Dialog>

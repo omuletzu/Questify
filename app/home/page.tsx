@@ -17,6 +17,7 @@ import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
 import axios from "axios";
 import { UserSettings } from "@/components/ui/UserSettings";
+import { useRouter } from "next/navigation";
 
 interface PostProps {
     userId: number;
@@ -39,6 +40,7 @@ interface Question {
 export default function ForumPage({ userId, userScore }: PostProps) {
     const [isOpen, setIsOpen] = useState(true);
     const { theme, setTheme } = useTheme()
+    const router = useRouter();
 
     const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 
@@ -47,6 +49,14 @@ export default function ForumPage({ userId, userScore }: PostProps) {
     const [username, setUsername] = useState("");
     const [pageIndex, setPageIndex] = useState(0);
     const [questionList, setQuestionList] = useState<Question[]>([]);
+
+    const handleLogoClick = () => {
+        router.push("/home")
+    }
+
+    const handleHomeButton = () => {
+        router.push("/home")
+    }
 
     const fetchPosts = async () => {
         const url = "http://localhost:8080/question/getRecent";
@@ -82,7 +92,12 @@ export default function ForumPage({ userId, userScore }: PostProps) {
             {/* header */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-gray-300 shadow-md p-4 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
+                    <button
+                        className="rounded-full"
+                        onClick={handleLogoClick}
+                    >
+                        <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
+                    </button>
                     <h1 className="text-2xl font-extrabold text-blue-900">Questify</h1>
                 </div>
 
@@ -136,9 +151,14 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                         <div className="p-4">
                             <h2 className="text-xl font-bold">Sidebar</h2>
                             <ul className="mt-4 space-y-2">
-                                <li><a href="#" className="block p-2 hover:bg-gray-700">btn1</a></li>
-                                <li><a href="#" className="block p-2 hover:bg-gray-700">btn2</a></li>
-                                <li><a href="#" className="block p-2 hover:bg-gray-700">btn3</a></li>
+                                <li>
+                                    <button
+                                        className="block w-full p-4 text-left hover:bg-gray-400 rounded-md"
+                                        onClick={handleHomeButton}
+                                    >
+                                        Home</button>
+                                </li>
+
                             </ul>
                         </div>
                     )}

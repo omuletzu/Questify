@@ -1,17 +1,10 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Post } from "@/components/ui/Post";
 import { ScoreLabel } from "@/components/ui/Score";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-import { Checkbox, FormControlLabel } from '@mui/material';
-import { CiImageOn } from "react-icons/ci";
 import { AddPostButton } from "@/components/ui/AddPostButton";
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
@@ -39,7 +32,6 @@ interface Question {
 
 export default function ForumPage({ userId, userScore }: PostProps) {
     const [isOpen, setIsOpen] = useState(true);
-    const { theme, setTheme } = useTheme()
     const router = useRouter();
 
     const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -113,12 +105,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <select value={theme} onChange={e => setTheme(e.target.value)}>
-                        <option value="system">System</option>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
-
 
                     <div className="flex items-center space-x-1">
                         <ScoreLabel />

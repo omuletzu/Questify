@@ -3,9 +3,26 @@
 import { FaUser } from "react-icons/fa"
 import { Button } from "./button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./dialog"
-import { Input } from "./input"
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 export const UserSettings = () => {
+
+    const { theme, setTheme } = useTheme()
+    const [selectedTheme, setSelectedTheme] = useState(theme || "system");
+    const router = useRouter();
+
+    useEffect(() => {
+        setSelectedTheme(theme || "system");
+    }, [theme]);
+
+    const handleThemeChange = (newTheme: string) => {
+        setSelectedTheme(newTheme);
+        setTheme(newTheme);
+    };
+
+
     return (
         <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
             <Dialog>
@@ -24,41 +41,42 @@ export const UserSettings = () => {
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
                             <label htmlFor="username" className="text-sm font-medium leading-none text-right">
-                                Username
+                                Theme
                             </label>
-                            <Input
-                                id="username"
-                                placeholder="john_doe"
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="email" className="text-sm font-medium leading-none text-right">
-                                Email
-                            </label>
-                            <Input
-                                id="email"
-                                placeholder="john.doe@example.com"
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="phone" className="text-sm font-medium leading-none text-right">
-                                Telefon
-                            </label>
-                            <Input
-                                id="phone"
-                                placeholder="+40712345678"
-                                className="col-span-3"
-                            />
+                            <div className="col-span-3 flex flex-col gap-2">
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedTheme === "system"}
+                                        onChange={() => handleThemeChange("system")}
+                                        className="w-5 h-5"
+                                    />
+                                    System
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedTheme === "light"}
+                                        onChange={() => handleThemeChange("light")}
+                                        className="w-5 h-5"
+                                    />
+                                    Light
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedTheme === "dark"}
+                                        onChange={() => handleThemeChange("dark")}
+                                        className="w-5 h-5"
+                                    />
+                                    Dark
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex justify-between">
-                        <Button onClick={() => { }}>
-                            Salvează
-                        </Button>
+                    <div className="flex flex-col">
                         <Button
-                            onClick={() => { }}
+                            onClick={() => router.push("/")}
                             className="bg-red-500 text-white"
                         >
                             Log out

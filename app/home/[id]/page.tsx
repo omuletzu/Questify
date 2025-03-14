@@ -8,14 +8,12 @@ import { ScoreLabel } from "@/components/ui/Score"
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar"
 import { UserSettings } from "@/components/ui/UserSettings"
 import { ViewPost } from "@/components/ui/ViewPost"
-import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
 
 export default function ViewPostPage() {
-    const { theme, setTheme } = useTheme()
     const [isOpen, setIsOpen] = useState(true);
     const [mounted, setMounted] = useState(false);
     const [username, setUsername] = useState("");
@@ -61,12 +59,6 @@ export default function ViewPostPage() {
                     <FilterPostsButton />
                 </div>
                 <div className="flex items-center space-x-4">
-                    <select value={theme} onChange={e => setTheme(e.target.value)}>
-                        <option value="system">System</option>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
-
 
                     <div className="flex items-center space-x-1">
                         <ScoreLabel />

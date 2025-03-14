@@ -85,7 +85,7 @@ export const ViewPost = ({ id, userId, title, author, text, status, tags, timest
     }, [id]);
 
     return (
-        <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-full">
+        <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-[300px]">
             <div className="flex justify-between text-sm text-gray-600">
                 <h1>{author}</h1>
                 <h1>{status === 0 ? "Sent" : status === 1 ? "In progress" : "Solved"}</h1>

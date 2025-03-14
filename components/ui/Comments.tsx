@@ -64,7 +64,7 @@ export const Comments = ({ id, userId, questionId, author, userScore, text, time
         //         })
     }
     return (
-        <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-full">
+        <div className="p-4 bg-gray-100 rounded-lg max-w-2xl mx-auto w-[400px]">
             <div className="flex justify-between text-sm text-gray-600">
                 <header className="flex flex-row items-center">
                     <h1>{author}</h1>

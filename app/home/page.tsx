@@ -109,7 +109,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
             <div className="flex flex-1 mt-16">
                 {/* sidebar */}
-                <aside className={`fixed left-0 h-full bg-gray-300 transition-all duration-300 ease-in-out ${isOpen ? "w-[300px]" : "w-[50px]"} overflow-y-auto`}>
+                <aside className={`fixed left-0 h-full bg-gray-300 transition-all duration-300 ease-in-out ${isOpen ? "w-[150px]" : "w-[50px]"} overflow-y-auto`}>
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="absolute top-4 right-4"

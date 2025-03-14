@@ -18,6 +18,8 @@ export default function ViewPostPage() {
     const [username, setUsername] = useState("");
     const router = useRouter();
 
+    const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+
     useEffect(() => {
         setMounted(true)
         setUsername(localStorage.getItem("username") || "Username error");
@@ -65,7 +67,7 @@ export default function ViewPostPage() {
 
             <div className="flex flex-1 mt-16">
                 {/* sidebar */}
-                <aside className={`fixed left-0 h-full bg-gray-300 transition-all duration-300 ease-in-out ${isOpen ? "w-[300px]" : "w-[50px]"} overflow-y-auto`}>
+                <aside className={`fixed left-0 h-full bg-gray-300 transition-all duration-300 ease-in-out ${isOpen ? "w-[150px]" : "w-[50px]"} overflow-y-auto`}>
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="absolute top-4 right-4"
@@ -94,17 +96,34 @@ export default function ViewPostPage() {
                         </div>
                     )}
                 </aside>
-                <main className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
+                <div className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
                     {/* postari */}
                     <div className="mt-8">
-                        <div className="space-y-6">
-                            <ViewPost id={51251} userId={2} image="/logo.png" text="salut" title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
-                            <header className="font-bold">Comments</header>
-                            <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" image="/img2.jpg" score={10} />
-                            <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" image="/img2.jpg" score={10} />
+                        <div className="space-y-6 flex flex-row">
+                            <ViewPost id={51251} userId={2} image="/logo.png" text={text1} title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
+                            <div>
+                                <header
+                                    className="font-bold text-2xl"
+                                >
+                                    Comments
+                                </header>
+
+                                <div className="py-2 space-y-4">
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" image="/img2.jpg" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" image="/img2.jpg" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </main>
+                </div>
             </div>
         </div>
     )

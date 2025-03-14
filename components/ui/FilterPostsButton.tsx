@@ -19,7 +19,7 @@ export const FilterPostsButton = () => {
             <DialogTrigger asChild>
                 <button
                     onClick={toggleFilterDropdown}
-                    className="px-6 py-2 bg-gray-400 rounded-md hover:bg-gray-300"
+                    className="px-6 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
                 >
                     Filter
                 </button>

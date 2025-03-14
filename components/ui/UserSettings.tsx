@@ -8,7 +8,6 @@ import { Input } from "./input"
 export const UserSettings = () => {
     return (
         <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-            {/* Butonul pentru deschiderea modalului */}
             <Dialog>
                 <DialogTrigger asChild>
                     <button
@@ -18,13 +17,11 @@ export const UserSettings = () => {
                     </button>
                 </DialogTrigger>
 
-                {/* Conținutul modalului */}
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle>{"Setări Cont"}</DialogTitle>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                        {/* Opțiunea pentru setările contului */}
                         <div className="grid grid-cols-4 items-center gap-4">
                             <label htmlFor="username" className="text-sm font-medium leading-none text-right">
                                 Username
@@ -57,11 +54,9 @@ export const UserSettings = () => {
                         </div>
                     </div>
                     <div className="flex justify-between">
-                        {/* Butonul de salvare */}
                         <Button onClick={() => { }}>
                             Salvează
                         </Button>
-                        {/* Butonul de logout */}
                         <Button
                             onClick={() => { }}
                             className="bg-red-500 text-white"

@@ -30,7 +30,6 @@ export const AddPostButton = () => {
             'title': title,
             'text': text,
             'tags': tagList,
-            'images': [],
         };
 
         if (!userId) {
@@ -48,6 +47,7 @@ export const AddPostButton = () => {
             return;
         }
 
+        console.log("Fail")
         const response = axios.post(url, questionData, {
             headers: {
                 'Content-Type': 'application/json'
@@ -59,6 +59,8 @@ export const AddPostButton = () => {
         if (responseData === "Success") {
             toast.success("Success");
             setTimeout(() => setIsDialogOpen(false), 1750);
+        } else {
+            toast.error("Failed to add question");
         }
     }
 
@@ -67,7 +69,7 @@ export const AddPostButton = () => {
             <DialogTrigger asChild>
                 <button
                     onClick={toggleAddDropdown}
-                    className="px-6 bg-gray-400 rounded-md hover:bg-gray-300"
+                    className="px-6 bg-gray-300 rounded-md hover:bg-gray-400"
                 >
                     + Add
                 </button>

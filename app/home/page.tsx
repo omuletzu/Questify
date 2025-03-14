@@ -16,6 +16,7 @@ import { AddPostButton } from "@/components/ui/AddPostButton";
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
 import axios from "axios";
+import { UserSettings } from "@/components/ui/UserSettings";
 
 interface PostProps {
     userId: number;
@@ -83,8 +84,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
     return (
         <div className="flex flex-col h-screen">
-
-            {/* <ForumHeader /> */}
             {/* header */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-gray-300 shadow-md p-4 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -115,34 +114,10 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                         <ScoreLabel />
                     </div>
 
-                    {/* todo */}
                     <span className="text-sm font-medium text-gray-700">{username}</span>
 
                     <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-                        <button
-                            onClick={toggleDropdown}
-                            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 transition-all"
-                        >
-                            <FaUser size={24} className="text-gray-800" />
-                        </button>
-
-                        {/* todo: modal,nu dropdown pt user settings */}
-                        {isDropdownOpen && (
-                            <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                                <ul className="py-2">
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                                            Setări cont
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                                            Log out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        )}
+                        <UserSettings />
                     </div>
                 </div>
             </header>
@@ -179,6 +154,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                     {/* postari */}
                     <div className="mt-8">
                         <div className="space-y-6">
+                            <Post id={51251} userId={2} image="/logo.png" text="salut" title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
                             {
                                 questionList.map((item) => (
                                     <Post

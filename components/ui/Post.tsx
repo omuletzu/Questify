@@ -4,8 +4,8 @@ import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Button } from "./button";
 import { CiMenuKebab } from "react-icons/ci";
 import { useEffect, useState } from "react";
-import { Updock } from "next/font/google";
 import axios, { Axios } from "axios";
+import { useRouter } from "next/navigation";
 
 interface PostProps {
     id: number;
@@ -23,9 +23,10 @@ interface PostProps {
 export const Post = ({ id, userId, title, author, text, status, tags, timestamp, score: initialScore, image }: PostProps) => {
 
     const [score, setScore] = useState(initialScore);
+    const router = useRouter()
 
     const handleViewPost = () => {
-
+        router.push(`/home/${id}`)
     }
 
     const voteUp = () => {
@@ -112,7 +113,7 @@ export const Post = ({ id, userId, title, author, text, status, tags, timestamp,
                     <button className="text-red-500" onClick={voteDown}><FaArrowDown /></button>
                 </div>
                 <Button
-                    onClick={() => { }}
+                    onClick={handleViewPost}
                     size="sm"
                     className="bg-gray-500 rounded-full"
                 >

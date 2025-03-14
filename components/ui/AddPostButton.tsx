@@ -5,32 +5,65 @@ import { Button } from "./button"
 import { Input } from "./input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./dialog"
 import { useState } from "react"
+import axios from "axios"
+import toast, { Toaster } from "react-hot-toast"
 
 export const AddPostButton = () => {
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isAddDropdownOpen, setIsAddDropdownOpen] = useState(false);
-    const [title, setTitle] = useState("")
-    const [text, setText] = useState("")
-    const [tags, setTags] = useState("")
-
+    const [title, setTitle] = useState("");
+    const [text, setText] = useState("");
+    const [tags, setTags] = useState("");
 
     const toggleAddDropdown = () => {
         setIsAddDropdownOpen(!isAddDropdownOpen)
     }
 
-    const handleAddQuestion = () => {
+    const handleAddQuestion = async () => {
         const tagList = tags.split(/[ ,;]+/);
 
-        const url = "hhtps://localhost:8080/question/add"
+        const url = "http://localhost:8080/question/add"
+        const userId = Number(localStorage.getItem("userId"));
+
         const questionData = {
-            'userId': localStorage.get("userId"),
+            'userId': userId,
             'title': title,
             'text': text,
+            'tags': tagList,
+            'images': [],
+        };
 
+        if (!userId) {
+            toast.error("User ID is missing. Please log in.");
+            return;
+        }
+
+        if (!title.trim()) {
+            toast.error("Title is required.");
+            return;
+        }
+
+        if (!text.trim()) {
+            toast.error("Description is required.");
+            return;
+        }
+
+        const response = axios.post(url, questionData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const responseData = (await response).data;
+
+        if (responseData === "Success") {
+            toast.success("Success");
+            setTimeout(() => setIsDialogOpen(false), 1750);
         }
     }
 
     return (
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
                 <button
                     onClick={toggleAddDropdown}
@@ -105,6 +138,7 @@ export const AddPostButton = () => {
                     </Button>
                 </div>
 
+                <Toaster />
             </DialogContent>
         </Dialog>
     )

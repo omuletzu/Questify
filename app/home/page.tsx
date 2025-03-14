@@ -15,11 +15,24 @@ import { CiImageOn } from "react-icons/ci";
 import { AddPostButton } from "@/components/ui/AddPostButton";
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
-import { UserSettings } from "@/components/ui/UserSettings";
+import axios from "axios";
 
 interface PostProps {
     userId: number;
     userScore: number;
+}
+
+interface Question {
+    id: number;
+    userId: number;
+    title: string;
+    author: string;
+    text: string;
+    status: number;
+    tags: string;
+    timestamp: string;
+    score: number;
+    image: string;
 }
 
 export default function ForumPage({ userId, userScore }: PostProps) {
@@ -31,17 +44,42 @@ export default function ForumPage({ userId, userScore }: PostProps) {
     const [mounted, setMounted] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    const [username, setUsername] = useState("");
+    const [pageIndex, setPageIndex] = useState(0);
+    const [questionList, setQuestionList] = useState<Question[]>([]);
 
-    useEffect(() => {
-        setMounted(true)
-    }, [])
+    const fetchPosts = async () => {
+        const url = "http://localhost:8080/question/getRecent";
+        const requestData = {
+            'limit': 10,
+            'pageNumber': pageIndex
+        };
 
-    if (!mounted)
-        return null
+        axios.get(url, {
+            params: requestData
+        })
+            .then((response) => {
+                const fetchedQuestions = response.data;
+                setQuestionList(questionList.concat(fetchedQuestions));
+            })
+            .catch((err) => {
+
+            })
+    }
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
+
+    useEffect(() => {
+        setMounted(true)
+        setUsername(localStorage.getItem("username") || "Username error");
+
+        fetchPosts();
+    }, [])
+
+    if (!mounted)
+        return null
 
     return (
         <div className="flex flex-col h-screen">
@@ -78,11 +116,34 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                     </div>
 
                     {/* todo */}
-                    <span className="text-sm font-medium text-gray-700">User123</span>
+                    <span className="text-sm font-medium text-gray-700">{username}</span>
 
-                    <UserSettings />
+                    <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
+                        <button
+                            onClick={toggleDropdown}
+                            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 transition-all"
+                        >
+                            <FaUser size={24} className="text-gray-800" />
+                        </button>
 
-
+                        {/* todo: modal,nu dropdown pt user settings */}
+                        {isDropdownOpen && (
+                            <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                                <ul className="py-2">
+                                    <li>
+                                        <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                            Setări cont
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                            Log out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </header>
 
@@ -118,11 +179,23 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                     {/* postari */}
                     <div className="mt-8">
                         <div className="space-y-6">
-                            <Post id={5} userId={3} title="Postarea nr 1" author="User12341" text={text1} status={2} tags=" C" timestamp="11 Mar 2025" score={5} image="/logo.png" />
-                            <Post id={6} userId={1} title="Postarea nr 2" author="User001" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry." status={1} tags="JS" timestamp="12 Mar 2025" score={7} />
-                            <Post id={7} userId={2} title="Postarea nr 3" author="User002" text="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." status={0} tags="React" timestamp="12 Mar 2025" score={4} />
-                            <Post id={8} userId={4} title="Postarea nr 4" author="User004" text="It has survived not only five centuries, but also the leap into electronic typesetting." image="/img2.jpg" status={2} tags="CSS" timestamp="13 Mar 2025" score={6} />
-                            <Post id={9} userId={5} title="Postarea nr 5" author="User005" text="It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages." status={1} tags="HTML" timestamp="14 Mar 2025" score={8} />
+                            {
+                                questionList.map((item) => (
+                                    <Post
+                                        key={item.id}  // Make sure to provide a unique key
+                                        id={item.id}
+                                        userId={item.userId}
+                                        title={item.title}
+                                        author={item.author}
+                                        text={item.text}
+                                        status={item.status}
+                                        tags={item.tags}
+                                        timestamp={item.timestamp}
+                                        score={item.score}
+                                        image={item.image}
+                                    />
+                                ))
+                            }
                         </div>
                     </div>
                 </main>

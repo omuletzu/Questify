@@ -70,8 +70,3 @@ export const FilterPostsButton = () => {
         </Dialog>
     )
 }
-
-
-
-
-

@@ -3,6 +3,9 @@
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Button } from "./button";
 import { CiMenuKebab } from "react-icons/ci";
+import { useEffect, useState } from "react";
+import { Updock } from "next/font/google";
+import axios, { Axios } from "axios";
 
 interface PostProps {
     id: number;
@@ -17,10 +20,72 @@ interface PostProps {
     image?: string;
 }
 
-export const Post = ({ id, userId, title, author, text, status, tags, timestamp, score, image }: PostProps) => {
+export const Post = ({ id, userId, title, author, text, status, tags, timestamp, score: initialScore, image }: PostProps) => {
+
+    const [score, setScore] = useState(initialScore);
+
     const handleViewPost = () => {
-        
+
     }
+
+    const voteUp = () => {
+        const url = "http://localhost:8080/question/voteUpById"
+        const voteRequest = {
+            'userId': Number(localStorage.getItem("userId")),
+            'questionId': Number(id)
+        }
+
+        axios.put(url, voteRequest)
+            .then((response) => {
+
+                console.log(response.data)
+
+                if (response.data === "Voted up") {
+                    setScore(score + 1);
+                }
+
+                if (response.data === "Vote up removed") {
+                    setScore(score - 1)
+                }
+            })
+    }
+
+    const voteDown = () => {
+        const url = "http://localhost:8080/question/voteDownById"
+        const voteRequest = {
+            'userId': Number(localStorage.getItem("userId")),
+            'questionId': Number(id)
+        }
+
+        axios.put(url, voteRequest)
+            .then((response) => {
+
+                console.log(response.data)
+
+                if (response.data === "Voted down") {
+                    setScore(score - 1)
+                }
+
+                if (response.data === "Vote down removed") {
+                    setScore(score + 1)
+                }
+            })
+    }
+
+    useEffect(() => {
+        const url = "http://localhost:8080/question/getQuestionScoreByQuestionId";
+
+        axios.get(url, {
+            params: { questionId: id }
+        })
+            .then((response) => {
+                setScore(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
+    }, [id]);
 
     return (
         <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-full">
@@ -42,9 +107,9 @@ export const Post = ({ id, userId, title, author, text, status, tags, timestamp,
 
             <div className="flex justify-between items-center mt-4">
                 <div className="flex items-center gap-2">
-                    <button className="text-green-500"><FaArrowUp /></button>
+                    <button className="text-green-500" onClick={voteUp}><FaArrowUp /></button>
                     <label className="font-bold">{score}</label>
-                    <button className="text-red-500"><FaArrowDown /></button>
+                    <button className="text-red-500" onClick={voteDown}><FaArrowDown /></button>
                 </div>
                 <Button
                     onClick={() => { }}

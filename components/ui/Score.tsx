@@ -20,12 +20,10 @@ export const ScoreLabel = () => {
             setError("User ID not found");
             return;
         }
-
-        axios
-            .get(url, {
-                params: { 'userId': userId }
-            }
-            )
+        console.log(userId);
+        axios.get(url, {
+            params: { 'userId': userId }
+        })
             .then((response) => {
                 setScore(response.data)
                 setLoading(false)

@@ -1,7 +1,5 @@
 "use client"
 
-import { AiOutlineSearch } from "react-icons/ai"
-
 export const SearchPostsBar = () => {
     return (
         <div>

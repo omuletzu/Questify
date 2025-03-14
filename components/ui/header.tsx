@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 
 export const Header = () => {
+    const router = useRouter();
     return (
         <header className="bg-gray-300 h-20 w-full border-b-2 border-slate-200 px-4">
             <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
@@ -15,7 +17,11 @@ export const Header = () => {
                     </h1>
                 </div>
                 <div>
-                    <Button>About Us</Button>
+                    <Button
+                        onClick={() => router.push("/about")}
+                    >
+                        About Us
+                    </Button>
                 </div>
             </div>
         </header>

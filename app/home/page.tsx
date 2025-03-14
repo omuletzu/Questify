@@ -43,7 +43,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
     const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
 
     const [mounted, setMounted] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const [username, setUsername] = useState("");
     const [pageIndex, setPageIndex] = useState(0);
@@ -66,10 +65,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
             .catch((err) => {
 
             })
-    }
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
     }
 
     useEffect(() => {
@@ -145,7 +140,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                                 <li><a href="#" className="block p-2 hover:bg-gray-700">btn2</a></li>
                                 <li><a href="#" className="block p-2 hover:bg-gray-700">btn3</a></li>
                             </ul>
-                            {/* <FollowList /> */}
                         </div>
                     )}
                 </aside>
@@ -158,7 +152,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                             {
                                 questionList.map((item) => (
                                     <Post
-                                        key={item.id}  // Make sure to provide a unique key
+                                        key={item.id}
                                         id={item.id}
                                         userId={item.userId}
                                         title={item.title}

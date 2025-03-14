@@ -13,21 +13,17 @@ interface PostProps {
     title: string;
     author: string;
     text: string;
-    status: number;         //0="Sent" | 1="In progress" | 2="Solved";
+    status: number; //0="Sent" | 1="In progress" | 2="Solved";
     tags?: string;
     timestamp: string;
     score: number;
     image?: string;
 }
 
-export const Post = ({ id, userId, title, author, text, status, tags, timestamp, score: initialScore, image }: PostProps) => {
+export const ViewPost = ({ id, userId, title, author, text, status, tags, timestamp, score: initialScore, image }: PostProps) => {
 
     const [score, setScore] = useState(initialScore);
     const router = useRouter()
-
-    const handleViewPost = () => {
-        router.push(`/home/${id}`)
-    }
 
     const voteUp = () => {
         const url = "http://localhost:8080/question/voteUpById"
@@ -112,13 +108,6 @@ export const Post = ({ id, userId, title, author, text, status, tags, timestamp,
                     <label className="font-bold">{score}</label>
                     <button className="text-red-500" onClick={voteDown}><FaArrowDown /></button>
                 </div>
-                <Button
-                    onClick={handleViewPost}
-                    size="sm"
-                    className="bg-gray-500 rounded-full"
-                >
-                    View post
-                </Button>
 
                 <button className="text-gray-500 text-xl rounded-md"><CiMenuKebab /></button>
             </div>

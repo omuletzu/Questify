@@ -11,20 +11,110 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
+import axios from "axios"
 
-export default function ViewPostPage() {
+interface PostProps {
+    userId: number;
+    userScore: number;
+}
+
+interface Question {
+    id: number;
+    userId: number;
+    title: string;
+    author: string;
+    text: string;
+    status: number;
+    timestamp: string;
+}
+
+export default function ViewPostPage({ userId, userScore }: PostProps) {
     const [isOpen, setIsOpen] = useState(true);
     const [mounted, setMounted] = useState(false);
-    const [username, setUsername] = useState("");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const router = useRouter();
 
-    const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    const [username, setUsername] = useState("");
+    const [pageIndex, setPageIndex] = useState(0);
+    const [questionListFiltered, setQuestionListFiltered] = useState<Question[]>([]);
+    const [questionListUnfiltered, setQuestionListUnfiltered] = useState<Question[]>([]);
+
+    const [searchBarText, setSearchBarText] = useState("");
+
+    const [displayFiltered, setDisplayFiltered] = useState(false);
+
+    const setSearchText = (text: string) => {
+        setSearchBarText(text);
+    }
+
+    const updateQuestionList = (list: Question[]) => {
+        setQuestionListFiltered(list);
+        setDisplayFiltered(true)
+    }
+
+    const fetchPosts = async () => {
+        const url = "http://localhost:8080/question/getRecent";
+        const requestData = {
+            'limit': 10,
+            'pageNumber': pageIndex
+        };
+
+        axios.get(url, {
+            params: requestData
+        })
+            .then((response) => {
+                const fetchedQuestions = response.data;
+                setQuestionListUnfiltered(questionListUnfiltered.concat(fetchedQuestions));
+            })
+            .catch((err) => {
+
+            })
+    }
+
+    const filterByTitle = () => {
+        const url = "http://localhost:8080/question/getFiltered";
+        const requestData = {
+            'option': 1,
+            'title': searchBarText
+        };
+
+        axios.get(url, {
+            params: requestData
+        })
+            .then((response) => {
+                const fetchedQuestions = response.data;
+                setQuestionListFiltered(fetchedQuestions);
+                setDisplayFiltered(true);
+            })
+            .catch((err) => {
+
+            })
+    }
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    }
 
     useEffect(() => {
         setMounted(true)
         setUsername(localStorage.getItem("username") || "Username error");
 
+        fetchPosts();
     }, [])
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setDisplayFiltered(false);
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        }
+    }, [questionListUnfiltered])
 
     if (!mounted)
         return null
@@ -43,13 +133,13 @@ export default function ViewPostPage() {
                 </div>
                 <div className="flex justify-center space-x-6 p-1">
                     <AddPostButton />
-                    <SearchPostsBar />
+                    <SearchPostsBar setSearchBarText={setSearchText} />
                     <button
                         onClick={() => { }}>
                         <AiOutlineSearch size={20} />
                     </button>
 
-                    <FilterPostsButton />
+                    <FilterPostsButton updateQuestions={updateQuestionList} />
                 </div>
                 <div className="flex items-center space-x-4">
 
@@ -100,7 +190,7 @@ export default function ViewPostPage() {
                     {/* postari */}
                     <div className="mt-8">
                         <div className="space-y-6 flex flex-row">
-                            <ViewPost id={51251} userId={2} image="/logo.png" text={text1} title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
+                            <ViewPost id={51251} userId={2} image="/logo.png" text="ok" title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
                             <div>
                                 <header
                                     className="font-bold text-2xl"

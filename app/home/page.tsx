@@ -1,14 +1,22 @@
 "use client"
 
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Post } from "@/components/ui/Post";
 import { ScoreLabel } from "@/components/ui/Score";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { Checkbox, FormControlLabel } from '@mui/material';
+import { CiImageOn } from "react-icons/ci";
 import { AddPostButton } from "@/components/ui/AddPostButton";
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
 import axios from "axios";
+import { title } from "process";
 import { UserSettings } from "@/components/ui/UserSettings";
 import { useRouter } from "next/navigation";
 
@@ -24,20 +32,32 @@ interface Question {
     author: string;
     text: string;
     status: number;
-    tags: string;
     timestamp: string;
-    score: number;
-    image: string;
 }
 
 export default function ForumPage({ userId, userScore }: PostProps) {
     const [isOpen, setIsOpen] = useState(true);
-    const router = useRouter();
     const [mounted, setMounted] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const router = useRouter();
 
     const [username, setUsername] = useState("");
     const [pageIndex, setPageIndex] = useState(0);
-    const [questionList, setQuestionList] = useState<Question[]>([]);
+    const [questionListFiltered, setQuestionListFiltered] = useState<Question[]>([]);
+    const [questionListUnfiltered, setQuestionListUnfiltered] = useState<Question[]>([]);
+
+    const [searchBarText, setSearchBarText] = useState("");
+
+    const [displayFiltered, setDisplayFiltered] = useState(false);
+
+    const setSearchText = (text: string) => {
+        setSearchBarText(text);
+    }
+
+    const updateQuestionList = (list: Question[]) => {
+        setQuestionListFiltered(list);
+        setDisplayFiltered(true)
+    }
 
     const fetchPosts = async () => {
         const url = "http://localhost:8080/question/getRecent";
@@ -51,11 +71,35 @@ export default function ForumPage({ userId, userScore }: PostProps) {
         })
             .then((response) => {
                 const fetchedQuestions = response.data;
-                setQuestionList(questionList.concat(fetchedQuestions));
+                setQuestionListUnfiltered(questionListUnfiltered.concat(fetchedQuestions));
             })
             .catch((err) => {
 
             })
+    }
+
+    const filterByTitle = () => {
+        const url = "http://localhost:8080/question/getFiltered";
+        const requestData = {
+            'option': 1,
+            'title': searchBarText
+        };
+
+        axios.get(url, {
+            params: requestData
+        })
+            .then((response) => {
+                const fetchedQuestions = response.data;
+                setQuestionListFiltered(fetchedQuestions);
+                setDisplayFiltered(true);
+            })
+            .catch((err) => {
+
+            })
+    }
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
     }
 
     useEffect(() => {
@@ -65,36 +109,47 @@ export default function ForumPage({ userId, userScore }: PostProps) {
         fetchPosts();
     }, [])
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setDisplayFiltered(false);
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        }
+    }, [questionListUnfiltered])
+
     if (!mounted)
         return null
 
     return (
         <div className="flex flex-col h-screen">
+
             {/* header */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-gray-300 shadow-md p-4 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                    <button
-                        className="rounded-full"
-                        onClick={() => router.push("/home")}
-                    >
-                        <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
-                    </button>
+                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
                     <h1 className="text-2xl font-extrabold text-blue-900">Questify</h1>
                 </div>
 
                 <div className="flex justify-center space-x-6 p-1">
                     <AddPostButton />
-                    <SearchPostsBar />
+                    <SearchPostsBar setSearchBarText={setSearchText} />
                     <button
-                        onClick={() => { }}>
+                        onClick={() => {
+                            filterByTitle();
+                        }}>
                         <AiOutlineSearch size={20} />
                     </button>
 
-                    <FilterPostsButton />
+                    <FilterPostsButton updateQuestions={updateQuestionList} />
                 </div>
 
                 <div className="flex items-center space-x-4">
-
                     <div className="flex items-center space-x-1">
                         <ScoreLabel />
                     </div>
@@ -143,23 +198,32 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                     {/* postari */}
                     <div className="mt-8">
                         <div className="space-y-6">
-                            <Post id={51251} userId={2} image="/logo.png" text="salut" title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
                             {
-                                questionList.map((item) => (
-                                    <Post
-                                        key={item.id}
-                                        id={item.id}
-                                        userId={item.userId}
-                                        title={item.title}
-                                        author={item.author}
-                                        text={item.text}
-                                        status={item.status}
-                                        tags={item.tags}
-                                        timestamp={item.timestamp}
-                                        score={item.score}
-                                        image={item.image}
-                                    />
-                                ))
+                                displayFiltered
+                                    ? questionListFiltered.map((item) => (
+                                        <Post
+                                            key={item.id}
+                                            id={item.id}
+                                            userId={item.userId}
+                                            title={item.title}
+                                            author={item.author}
+                                            text={item.text}
+                                            status={item.status}
+                                            timestamp={item.timestamp}
+                                        />
+                                    ))
+                                    : questionListUnfiltered.map((item) => (
+                                        <Post
+                                            key={item.id}
+                                            id={item.id}
+                                            userId={item.userId}
+                                            title={item.title}
+                                            author={item.author}
+                                            text={item.text}
+                                            status={item.status}
+                                            timestamp={item.timestamp}
+                                        />
+                                    ))
                             }
                         </div>
                     </div>

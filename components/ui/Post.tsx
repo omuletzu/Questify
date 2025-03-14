@@ -135,9 +135,13 @@ export const Post = ({
 
             <div className="flex justify-between items-center mt-4">
                 <div className="flex items-center gap-2">
-                    <button className="text-green-500" onClick={voteUp}><FaArrowUp /></button>
+                    <button className="text-green-500" onClick={voteUp}>
+                        <FaArrowUp />
+                    </button>
                     <label className="font-bold">{score}</label>
-                    <button className="text-red-500" onClick={voteDown}><FaArrowDown /></button>
+                    <button className="text-red-500" onClick={voteDown}>
+                        <FaArrowDown />
+                    </button>
                 </div>
                 <Button
                     onClick={() => router.push(`/home/${id}`)}
@@ -147,7 +151,9 @@ export const Post = ({
                     View post
                 </Button>
 
-                <button className="text-gray-500 text-xl rounded-md"><CiMenuKebab /></button>
+                <button className="text-gray-500 text-xl rounded-md">
+                    <CiMenuKebab />
+                </button>
             </div>
         </div>
     )

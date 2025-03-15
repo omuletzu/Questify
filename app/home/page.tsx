@@ -17,8 +17,8 @@ import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
 import axios from "axios";
 import { title } from "process";
-import { UserSettings } from "@/components/ui/UserSettings";
 import { useRouter } from "next/navigation";
+import { UserSettings } from "@/components/ui/UserSettings";
 
 interface PostProps {
     userId: number;
@@ -37,9 +37,12 @@ interface Question {
 
 export default function ForumPage({ userId, userScore }: PostProps) {
     const [isOpen, setIsOpen] = useState(true);
+    const { theme, setTheme } = useTheme();
+
+    const router = useRouter();
+
     const [mounted, setMounted] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const router = useRouter();
 
     const [username, setUsername] = useState("");
     const [pageIndex, setPageIndex] = useState(0);
@@ -128,7 +131,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
     return (
         <div className="flex flex-col h-screen">
-
             {/* header */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-gray-300 shadow-md p-4 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -162,7 +164,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 </div>
             </header>
 
-            <div className="flex flex-1 mt-16">
+            <div className="flex flex-1 mt-20">
                 {/* sidebar */}
                 <aside className={`fixed left-0 h-full bg-gray-300 transition-all duration-300 ease-in-out ${isOpen ? "w-[150px]" : "w-[50px]"} overflow-y-auto`}>
                     <button
@@ -196,6 +198,15 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
                 <main className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"}`}>
                     {/* postari */}
+                    <Post
+                        id={1}
+                        userId={1}
+                        title="salut"
+                        author="mihnea"
+                        text="Astazi este ora joi"
+                        status={1}
+                        timestamp="15 mar 2025"
+                    />
                     <div className="mt-8">
                         <div className="space-y-6">
                             {

@@ -1,11 +1,14 @@
-"use client"
+"use client";
 
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown, FaRegEdit } from "react-icons/fa";
 import { Button } from "./button";
 import { CiMenuKebab } from "react-icons/ci";
 import { useEffect, useState } from "react";
+import { Updock } from "next/font/google";
 import axios, { Axios } from "axios";
+import Router from "next/navigation";
 import { useRouter } from "next/navigation";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface PostProps {
     id: number;
@@ -13,7 +16,7 @@ interface PostProps {
     title: string;
     author: string;
     text: string;
-    status: number;         //0="Sent" | 1="In progress" | 2="Solved";
+    status: number; //0="Sent" | 1="In progress" | 2="Solved";
     timestamp: string;
 }
 
@@ -26,11 +29,16 @@ export const Post = ({
     status,
     timestamp,
 }: PostProps) => {
-
     const [score, setScore] = useState(0);
     const [tagList, setTagList] = useState([]);
     const [image, setImage] = useState("");
+
     const router = useRouter();
+
+    const handleViewPost = () => {
+        console.log(id);
+        router.push(`/home/${id}?questionId=${id}&userId=${userId}&text=${text}&title=${title}&score=${score}&status=${status}&timestamp=${timestamp}`)
+    };
 
     const voteUp = () => {
         const url = "http://localhost:8080/question/voteUpById";
@@ -59,8 +67,6 @@ export const Post = ({
         };
 
         axios.put(url, voteRequest).then((response) => {
-            console.log(response.data);
-
             if (response.data === "Voted down") {
                 setScore(score - 1);
             }
@@ -105,7 +111,9 @@ export const Post = ({
         <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-full">
             <div className="flex justify-between text-sm text-gray-600">
                 <h1>{author}</h1>
-                <h1>{status === 0 ? "Sent" : status === 1 ? "In progress" : "Solved"}</h1>
+                <h1>
+                    {status === 0 ? "Sent" : status === 1 ? "In progress" : "Solved"}
+                </h1>
                 <h1 className="z-15">{timestamp}</h1>
             </div>
 
@@ -113,7 +121,11 @@ export const Post = ({
 
             {image && (
                 <div className="w-1/2 mx-auto mt-2">
-                    <img src={image} alt="image" className="w-full h-auto rounded-lg object-cover  " />
+                    <img
+                        src={image}
+                        alt="image"
+                        className="w-full h-auto rounded-lg object-cover  "
+                    />
                 </div>
             )}
 
@@ -144,17 +156,30 @@ export const Post = ({
                     </button>
                 </div>
                 <Button
-                    onClick={() => router.push(`/home/${id}`)}
+                    onClick={() => {
+                        handleViewPost();
+                    }}
                     size="sm"
                     className="bg-gray-500 rounded-full"
                 >
                     View post
                 </Button>
 
-                <button className="text-gray-500 text-xl rounded-md">
-                    <CiMenuKebab />
-                </button>
+                <div className="space-x-5">
+                    <Button
+                        className="bg-gray-500 text-white text-xl rounded-full"
+                        size="xs"
+                    >
+                        <FaRegEdit />
+                    </Button>
+                    <Button
+                        className="bg-red-500 text-white text-xl rounded-full"
+                        size="xs"
+                    >
+                        <MdDeleteOutline />
+                    </Button>
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};

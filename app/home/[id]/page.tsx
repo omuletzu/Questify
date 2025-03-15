@@ -7,7 +7,7 @@ import { ScoreLabel } from "@/components/ui/Score"
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar"
 import { UserSettings } from "@/components/ui/UserSettings"
 import { ViewPost } from "@/components/ui/ViewPost"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
@@ -18,26 +18,36 @@ interface PostProps {
     userScore: number;
 }
 
-interface Question {
+interface Answer {
     id: number;
     userId: number;
-    title: string;
-    author: string;
     text: string;
     status: number;
     timestamp: string;
 }
 
-export default function ViewPostPage({ userId, userScore }: PostProps) {
+interface AnswerProps {
+    question: Answer
+}
+
+export default function ViewPostPage() {
     const [isOpen, setIsOpen] = useState(true);
     const [mounted, setMounted] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const router = useRouter();
 
+    const searchParams = useSearchParams();
+
+    const questionId = Number(searchParams.get("questionId"));
+    const userId = Number(searchParams.get("userId"));
+    const text = searchParams.get("text") || "";
+    const title = searchParams.get("title") || "";
+    const score = Number(searchParams.get("score"));
+    const status = Number(searchParams.get("status"));
+    const timestamp = searchParams.get("timestamp") || "";
+
     const [username, setUsername] = useState("");
-    const [pageIndex, setPageIndex] = useState(0);
-    const [questionListFiltered, setQuestionListFiltered] = useState<Question[]>([]);
-    const [questionListUnfiltered, setQuestionListUnfiltered] = useState<Question[]>([]);
+    const [answerList, setAnswerList] = useState<Answer[]>([]);
 
     const [searchBarText, setSearchBarText] = useState("");
 
@@ -47,65 +57,35 @@ export default function ViewPostPage({ userId, userScore }: PostProps) {
         setSearchBarText(text);
     }
 
-    const updateQuestionList = (list: Question[]) => {
-        setQuestionListFiltered(list);
-        setDisplayFiltered(true)
-    }
-
-    const fetchPosts = async () => {
-        const url = "http://localhost:8080/question/getRecent";
+    const fetchAnswers = async () => {
+        const url = "http://localhost:8080/answers/getByQuestionId";
         const requestData = {
-            'limit': 10,
-            'pageNumber': pageIndex
+            'questionId': questionId,
         };
 
         axios.get(url, {
             params: requestData
         })
             .then((response) => {
-                const fetchedQuestions = response.data;
-                setQuestionListUnfiltered(questionListUnfiltered.concat(fetchedQuestions));
+                const fetchedAnswers = response.data;
+                console.log(searchParams.get("questionId"));
+                setAnswerList(fetchedAnswers);
             })
             .catch((err) => {
 
             })
-    }
-
-    const filterByTitle = () => {
-        const url = "http://localhost:8080/question/getFiltered";
-        const requestData = {
-            'option': 1,
-            'title': searchBarText
-        };
-
-        axios.get(url, {
-            params: requestData
-        })
-            .then((response) => {
-                const fetchedQuestions = response.data;
-                setQuestionListFiltered(fetchedQuestions);
-                setDisplayFiltered(true);
-            })
-            .catch((err) => {
-
-            })
-    }
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
     }
 
     useEffect(() => {
         setMounted(true)
-        setUsername(localStorage.getItem("username") || "Username error");
-
-        fetchPosts();
+        setUsername(localStorage.getItem("username")!!);
+        fetchAnswers();
     }, [])
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
-                setDisplayFiltered(false);
+                router.back();
             }
         };
 
@@ -114,7 +94,7 @@ export default function ViewPostPage({ userId, userScore }: PostProps) {
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
         }
-    }, [questionListUnfiltered])
+    }, [])
 
     if (!mounted)
         return null
@@ -130,16 +110,6 @@ export default function ViewPostPage({ userId, userScore }: PostProps) {
                         <img src="/logo.png" alt="Logo" className="w-10 h-10 object-cover" />
                     </button>
                     <h1 className="text-2xl font-extrabold text-blue-900">Questify</h1>
-                </div>
-                <div className="flex justify-center space-x-6 p-1">
-                    <AddPostButton />
-                    <SearchPostsBar setSearchBarText={setSearchText} />
-                    <button
-                        onClick={() => { }}>
-                        <AiOutlineSearch size={20} />
-                    </button>
-
-                    <FilterPostsButton updateQuestions={updateQuestionList} />
                 </div>
                 <div className="flex items-center space-x-4">
 
@@ -190,7 +160,7 @@ export default function ViewPostPage({ userId, userScore }: PostProps) {
                     {/* postari */}
                     <div className="mt-8">
                         <div className="space-y-6 flex flex-row">
-                            <ViewPost id={51251} userId={2} image="/logo.png" text="ok" title="Salutttt" score={0} author="raul" status={0} timestamp="14mar2025" />
+                            <ViewPost id={questionId} userId={userId} text={text} title={title} score={score} author={localStorage.getItem("username")!!} status={status} timestamp={timestamp} />
                             <div>
                                 <header
                                     className="font-bold text-2xl"
@@ -199,16 +169,20 @@ export default function ViewPostPage({ userId, userScore }: PostProps) {
                                 </header>
 
                                 <div className="py-2 space-y-4">
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" image="/img2.jpg" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" image="/img2.jpg" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
-                                    <Comments author="mihnea" questionId={4} userScore={15} id={1} userId={1} text="Salut" timestamp="14mar2025" score={10} />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    <Comments id={1} userId={1} author="raul" questionId={1} text="ce???" timestamp="Now" />
+                                    {
+                                        answerList.map((item) => (
+                                            <Comments key={item.id} id={item.id} userId={item.userId} author={localStorage.getItem("username")!!} questionId={questionId} text={item.text} timestamp={item.timestamp} />
+                                        ))
+                                    }
                                 </div>
                             </div>
                         </div>

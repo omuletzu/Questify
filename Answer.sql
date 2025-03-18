@@ -1,0 +1,8 @@
+CREATE TABLE Answer(
+    id SERIAL PRIMARY KEY ,
+    user_id INT NOT NULL DEFAULT 0,
+    question_id INT NOT NULL DEFAULT 0,
+    text VARCHAR(1000) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    FOREIGN KEY (question_id) REFERENCES Question(id) ON DELETE CASCADE
+);

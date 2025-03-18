@@ -43,10 +43,15 @@ Questify is a Q&A platform that allows users to post questions and receive answe
     - They down vote an answer of another user (-1.5 point).
 
 - Admin mode (can ban users and delete any question or answer)
-  ![image](https://github.com/user-attachments/assets/3c92c4d0-4091-43b1-a3f2-619e27faa950)
-  ![image](https://github.com/user-attachments/assets/d1c9daca-bb9a-4bb1-9295-873593b829e1)
-  ![image](https://github.com/user-attachments/assets/ce897cd7-eea9-42b0-8ba0-6036aa06d3c4)
+   
+    ![image](https://github.com/user-attachments/assets/3c92c4d0-4091-43b1-a3f2-619e27faa950)
+  
+    ![image](https://github.com/user-attachments/assets/d1c9daca-bb9a-4bb1-9295-873593b829e1)
+  
+    ![image](https://github.com/user-attachments/assets/ce897cd7-eea9-42b0-8ba0-6036aa06d3c4)
+  
   - At this moment, the user will receive an SMS and an email saying that they have been banned
+    
     ![image](https://github.com/user-attachments/assets/12874150-970d-40e6-b1f7-e062b42b631b)
 
 

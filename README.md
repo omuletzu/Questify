@@ -2,7 +2,8 @@
 Questify is a Q&A platform that allows users to post questions and receive answers, with an upvote/downvote system to rank responses. Built using modern web technologies, it ensures a seamless experience for users looking for knowledge exchange.
 
 ## Demo video
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/cbqB4ZMCeTc/0.jpg)](https://www.youtube.com/watch?v=cbqB4ZMCeTc)
+https://github.com/user-attachments/assets/7f4054fe-18da-4004-ac02-c8cd40b5c489
+
 
 ## Features
 - Post questions & answers

@@ -67,5 +67,5 @@ Questify is a Q&A platform that allows users to post questions and receive answe
 ## About us
 We are two Computer Science students passionate about technology and creating projects that bring real change in the world. Below are the links to our personal websites.
 
-- Simota Mihnea: [https://mihnea-simota-portofolio.netlify.app/](https://mihnea-simota-portofolio.netlify.app/){:target="_blank" rel="noopener noreferrer"}
-- Muresan Raul: [https://raul-muresan-personal-website.vercel.app/](https://raul-muresan-personal-website.vercel.app/){:target="_blank" rel="noopener noreferrer"}
+- Simota Mihnea: [https://mihnea-simota-portofolio.netlify.app/](https://mihnea-simota-portofolio.netlify.app/)
+- Muresan Raul: [https://raul-muresan-personal-website.vercel.app/](https://raul-muresan-personal-website.vercel.app/)

@@ -1,5 +1,5 @@
-## Intro
-Questify is a Q&A platform that allows users to post questions and receive answers, with an upvote/downvote system to rank responses. Built using modern web technologies, it ensures a seamless experience for users looking for knowledge exchange.
+## Questify
+**Questify** is a **Q&A platform** designed for users to ask questions, share knowledge, and engage in meaningful discussions. Built with **Spring Boot**, **React**, and **PostgreSQL**, it ensures a seamless and efficient experience for **knowledge exchange**.
 
 ## Demo video
 https://github.com/user-attachments/assets/7f4054fe-18da-4004-ac02-c8cd40b5c489

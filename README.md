@@ -4,7 +4,7 @@
 ## Demo video
 https://github.com/user-attachments/assets/7f4054fe-18da-4004-ac02-c8cd40b5c489
 
-## What users can do
+## Features
 **Authentication and security**
 - Users can create an account by providing **username**, **password**, **email**, and **phone number**.
 - Upon **registration** or **login**, they receive a secure **token**, which is used throughout their browsing session to validate interactions with the app’s **microservice**.
@@ -38,7 +38,7 @@ https://github.com/user-attachments/assets/7f4054fe-18da-4004-ac02-c8cd40b5c489
   - Ability to **edit** or **delete** any question.
 
 
-## Features
+## Visual overview of the Features
 
 ### Post Questions & Answers
 

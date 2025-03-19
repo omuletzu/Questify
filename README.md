@@ -1,8 +1,41 @@
 ## Questify
-**Questify** is a **Q&A platform** designed for users to ask questions, share knowledge, and engage in meaningful discussions. Built with **Spring Boot**, **React**, and **PostgreSQL**, it ensures a seamless and efficient experience for **knowledge exchange**.
+**Questify** is a **Q&A platform** designed for users to ask questions, share knowledge, and engage in meaningful discussions. Built with **Spring Boot**, **React**, and **PostgreSQL**, it leverages a **microservice architecture** to ensure a seamless and efficient experience for **knowledge exchange**.
 
 ## Demo video
 https://github.com/user-attachments/assets/7f4054fe-18da-4004-ac02-c8cd40b5c489
+
+## What users can do
+**Authentication and security**
+- Users can create an account by providing **username**, **password**, **email**, and **phone number**.
+- Upon **registration** or **login**, they receive a secure **token**, which is used throughout their browsing session to validate interactions with the app’s **microservice**.
+
+**Viewing and interacting with questions**
+- Users can browse **recent questions**, added by other users.
+- Each question includes, **title**, **text**, multiple **tags**, and **images** (stored as **URLs**).
+- Users can **upvote** or **downvote** the question, affecting both:
+  - The question's **score**
+  - The author's **score**
+
+**Posting and managing content**
+- Users can **post questions** with **title**, **description**, **tags**, and **images**.
+- Questions have three possible **statuses**:
+  - **Sent** (newly posted)
+  - **In progress** (currently receiving comments)
+  - **Solved** (marked by the author, no one can add or edit anything)
+- Once a question is marked as **solved**, it becomes **locked** and it can be only deleted from that point on.
+
+**Search and filtering**
+- Users can filter the question by:
+  - **Title** (this also includes subtitles)
+  - **Username** (the author of the post)
+  - **Tags**
+  - Their own **questions**
+
+**Admin features**
+- These are special users with privileges:
+  - **Ban / Unban users**
+  - Banned users can no longer use the app and they will receive an **SMS notification** that they've been banned.
+  - Ability to **edit** or **delete** any question.
 
 
 ## Features

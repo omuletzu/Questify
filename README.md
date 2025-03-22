@@ -112,7 +112,13 @@ https://github.com/user-attachments/assets/7f4054fe-18da-4004-ac02-c8cd40b5c489
 
 - When a user is banned, they will receive both an **SMS** and **email notification** informing them of the ban.
 
+- SMS sample
+  
   ![Ban Notification](https://github.com/user-attachments/assets/12874150-970d-40e6-b1f7-e062b42b631b)
+  
+- Email Sample
+  
+  ![emailBan](https://github.com/user-attachments/assets/99cb2a96-e327-427c-bdef-5a5e69a4adf9)
 
 ---
 

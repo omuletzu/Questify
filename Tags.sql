@@ -1,0 +1,4 @@
+CREATE TABLE Tags(
+    id SERIAL PRIMARY KEY,
+    tag_name VARCHAR(255) NOT NULL
+)

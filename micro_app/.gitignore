@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+micro_app/src/main/resources/application.properties
+micro_auth/src/main/resources/application.properties

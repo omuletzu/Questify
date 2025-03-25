@@ -4,8 +4,11 @@ import com.example.auth.models.Users;
 import com.example.auth.models.requests.UserGetByUsernameRequest;
 import com.example.auth.models.requests.UserGetRequest;
 import com.example.auth.services.EmailService;
+import com.example.auth.services.PhoneService;
 import com.example.auth.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -23,15 +26,21 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private Logger logger;
+
     private UserService userService;
     private RestTemplate restTemplate;
     private EmailService emailService;
+    private PhoneService phoneService;
 
     @Autowired
-    public UserController(UserService userService, RestTemplate restTemplate, EmailService emailService){
+    public UserController(UserService userService, RestTemplate restTemplate, EmailService emailService, PhoneService phoneService){
         this.userService = userService;
         this.restTemplate = restTemplate;
         this.emailService = emailService;
+        this.phoneService = phoneService;
+
+        logger = LoggerFactory.getLogger(UserController.class);
     }
 
     @GetMapping("getAll")
@@ -79,7 +88,16 @@ public class UserController {
 
         Optional<Users> user = userService.getUserById(userId);
 
-        //user.ifPresent(users -> emailService.sendMessage(users.getEmail(), "Questify User Ban", "You have been banned by an admin."));
+        if(user.isPresent()){
+            try {
+                String banMessage = user.get().getUsername() + " was banned from Questify by an admin";
+                user.ifPresent(users -> emailService.sendMessage(users.getEmail(), "Questify User Ban", banMessage));
+                phoneService.sensSms(user.get().getPhone(), banMessage);
+            }
+            catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+        }
     }
 
     @PutMapping("/unbanUser")
@@ -102,7 +120,6 @@ public class UserController {
 
     @GetMapping("/scoreById")
     public ResponseEntity<Double> computeUserScore(@RequestParam(name = "userId") Long userId, HttpServletRequest request) {
-
         String token = request.getHeader("Authorization");
         HttpHeaders httpHeaders = new HttpHeaders();
 

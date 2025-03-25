@@ -319,8 +319,6 @@ public class QuestionController {
 
     @DeleteMapping("/deleteById")
     public ResponseEntity<String> deleteQuestionById(@RequestParam(name = "questionId") Long questionId) {
-        Logger logger = LoggerFactory.getLogger(QuestionController.class);
-        logger.info(String.valueOf(questionId));
 
         List<QuestionImages> questionImages = questionImagesService.findAllQuestionImagesByQuestionId(questionId);
 

@@ -31,15 +31,10 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
   const [username, setUsername] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
-  const [questionListFiltered, setQuestionListFiltered] = useState<number[]>(
-    []
-  );
-  const [questionListUnfiltered, setQuestionListUnfiltered] = useState<
-    number[]
-  >([]);
+  const [questionListFiltered, setQuestionListFiltered] = useState<number[]>([]);
+  const [questionListUnfiltered, setQuestionListUnfiltered] = useState<number[]>([]);
 
   const [searchBarText, setSearchBarText] = useState("");
-
   const [displayFiltered, setDisplayFiltered] = useState(false);
 
   const setSearchText = (text: string) => {

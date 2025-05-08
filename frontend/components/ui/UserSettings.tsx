@@ -2,7 +2,7 @@
 
 import { FaUser } from "react-icons/fa"
 import { Button } from "./button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./dialog"
+import { Dialog, DialogContent, DialogTrigger } from "./dialog"
 import { useRouter } from "next/navigation"
 
 export const UserSettings = () => {

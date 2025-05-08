@@ -2,7 +2,6 @@
 
 import { Post } from "@/components/ui/Post";
 import { ScoreLabel } from "@/components/ui/Score";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
@@ -27,8 +26,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(true);
-  const { theme, setTheme } = useTheme();
-
   const [mounted, setMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -49,7 +46,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
     setSearchBarText(text);
   };
 
-  const updateQstatus = (qstatus: number) => {};
+  const updateQstatus = (qstatus: number) => { };
 
   const updateDeleteQuestion = (index: number) => {
     if (displayFiltered) {
@@ -86,7 +83,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
           questionListUnfiltered.concat(fetchedQuestions)
         );
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const filterByTitle = () => {
@@ -105,7 +102,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
         setQuestionListFiltered(fetchedQuestions);
         setDisplayFiltered(true);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const toggleDropdown = () => {
@@ -137,7 +134,6 @@ export default function ForumPage({ userId, userScore }: PostProps) {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* <ForumHeader /> */}
       {/* header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-blue-300 shadow-md p-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
@@ -159,17 +155,10 @@ export default function ForumPage({ userId, userScore }: PostProps) {
         </div>
 
         <div className="flex items-center space-x-4">
-          <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-            <option value="system">System</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-
           <div className="flex items-center space-x-1">
             <ScoreLabel />
           </div>
 
-          {/* todo */}
           <span className="text-sm font-medium text-gray-700">{username}</span>
 
           <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
@@ -180,18 +169,9 @@ export default function ForumPage({ userId, userScore }: PostProps) {
               <FaUser size={24} className="text-gray-800" />
             </button>
 
-            {/* todo: modal,nu dropdown pt user settings */}
             {isDropdownOpen && (
               <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <ul className="py-2">
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >
-                      Setări cont
-                    </a>
-                  </li>
                   <li>
                     <a
                       href="#"
@@ -215,9 +195,8 @@ export default function ForumPage({ userId, userScore }: PostProps) {
       <div className="flex flex-1 mt-16">
         {/* sidebar */}
         <aside
-          className={`fixed left-0 h-full bg-gray-200 transition-all duration-300 ease-in-out ${
-            isOpen ? "w-[300px]" : "w-[50px]"
-          } overflow-y-auto`}
+          className={`fixed left-0 h-full bg-gray-200 transition-all duration-300 ease-in-out ${isOpen ? "w-[300px]" : "w-[50px]"
+            } overflow-y-auto`}
         >
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -266,34 +245,33 @@ export default function ForumPage({ userId, userScore }: PostProps) {
         </aside>
 
         <main
-          className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${
-            isOpen ? "ml-[300px]" : "ml-[50px]"
-          }`}
+          className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"
+            }`}
         >
           {/* postari */}
           <div className="mt-8">
             <div className="space-y-6">
               {displayFiltered
                 ? questionListFiltered.map((item, index) => (
-                    <Post
-                      key={index}
-                      id={item}
-                      renderViewPostButton={true}
-                      questionListIndex={index}
-                      updateQstatus={updateQstatus}
-                      updateDeleteQuestion={updateDeleteQuestion}
-                    />
-                  ))
+                  <Post
+                    key={index}
+                    id={item}
+                    renderViewPostButton={true}
+                    questionListIndex={index}
+                    updateQstatus={updateQstatus}
+                    updateDeleteQuestion={updateDeleteQuestion}
+                  />
+                ))
                 : questionListUnfiltered.map((item, index) => (
-                    <Post
-                      key={index}
-                      id={item}
-                      renderViewPostButton={true}
-                      questionListIndex={index}
-                      updateQstatus={updateQstatus}
-                      updateDeleteQuestion={updateDeleteQuestion}
-                    />
-                  ))}
+                  <Post
+                    key={index}
+                    id={item}
+                    renderViewPostButton={true}
+                    questionListIndex={index}
+                    updateQstatus={updateQstatus}
+                    updateDeleteQuestion={updateDeleteQuestion}
+                  />
+                ))}
             </div>
           </div>
         </main>

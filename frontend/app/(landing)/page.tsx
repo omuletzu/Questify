@@ -11,9 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Typewriter from "typewriter-effect";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { safeAxios } from "@/services/axiosInstance";
 import toast, { Toaster } from "react-hot-toast";

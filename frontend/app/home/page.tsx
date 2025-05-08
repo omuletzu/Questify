@@ -1,15 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Post } from "@/components/ui/Post";
 import { ScoreLabel } from "@/components/ui/Score";
 import { useTheme } from "next-themes";
@@ -20,13 +10,9 @@ import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
 } from "react-icons/md";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { CiImageOn } from "react-icons/ci";
 import { AddPostButton } from "@/components/ui/AddPostButton";
 import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
-import axios from "axios";
-import { title } from "process";
 import { safeAxios } from "@/services/axiosInstance";
 import { useRouter } from "next/navigation";
 

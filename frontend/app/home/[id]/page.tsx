@@ -1,23 +1,16 @@
 "use client";
 
-import { AddPostButton } from "@/components/ui/AddPostButton";
 import { Comments } from "@/components/ui/Comments";
-import { FilterPostsButton } from "@/components/ui/FilterPostsButton";
 import { ScoreLabel } from "@/components/ui/Score";
-import { SearchPostsBar } from "@/components/ui/SearchPostsBar";
 import { UserSettings } from "@/components/ui/UserSettings";
-import { ViewPost } from "@/components/ui/ViewPost";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
-import { IoIosAddCircle } from "react-icons/io";
+
 import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
 } from "react-icons/md";
-import axios from "axios";
 import { Post } from "@/components/ui/Post";
-import { Button } from "@mui/material";
 import { AddAnswerButton } from "@/components/ui/AddAnswerButton";
 import { safeAxios } from "@/services/axiosInstance";
 

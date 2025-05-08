@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios, { Axios } from "axios";
 import { useRouter } from "next/navigation";
 import { safeAxios } from "@/services/axiosInstance";
+import Link from "next/link";
 
 interface PostProps {
   id: number;
@@ -96,7 +97,20 @@ export const ViewPost = ({
   return (
     <div className="p-4 bg-white shadow-md rounded-lg max-w-2xl mx-auto w-[300px]">
       <div className="flex justify-between text-sm text-gray-600">
-        <h1>{author}</h1>
+        <h1>
+          <Link href={`/user/${userId}`} className="text-blue-500 hover:underline">
+            {author}
+          </Link>
+        </h1>
+        <h1
+          className={`${status === 0
+            ? "text-yellow-500"
+            : status === 1
+              ? "text-blue-500"
+              : "text-green-500"
+            } font-semibold`}
+        >
+        </h1>
         <h1>
           {status === 0 ? "Sent" : status === 1 ? "In progress" : "Solved"}
         </h1>

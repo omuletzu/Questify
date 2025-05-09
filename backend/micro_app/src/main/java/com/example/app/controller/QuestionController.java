@@ -472,4 +472,17 @@ public class QuestionController {
         questionService.setQuestionStatusById(questionId, 2);
         return ResponseEntity.ok("Success");
     }
+
+    //modificare
+    @GetMapping("/getQuestionsByUserId")
+    public ResponseEntity<List<Question>> getQuestionsByUserId(@RequestParam(name = "userId") Long userId) {
+        List<Question> questions = questionService.filterByUserId(userId);
+    
+        if (questions.isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList());
+        }
+    
+        return ResponseEntity.ok(questions);
+}
+
 }

@@ -166,11 +166,7 @@ export default function UserProfilePage() {
                                 ))}
                         </div>
                     </div>
-
-
                 </main>
-
-
             </div>
         </div>
     )

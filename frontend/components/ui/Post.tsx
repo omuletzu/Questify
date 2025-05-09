@@ -2,11 +2,7 @@
 
 import { FaArrowUp, FaArrowDown, FaRegEdit } from "react-icons/fa";
 import { Button } from "./button";
-import { CiMenuKebab } from "react-icons/ci";
 import { useEffect, useState } from "react";
-import { Updock } from "next/font/google";
-import axios, { Axios } from "axios";
-import Router from "next/navigation";
 import { useRouter } from "next/navigation";
 import { MdDeleteOutline } from "react-icons/md";
 import { EditPostButton } from "./EditPostButton";
@@ -194,7 +190,7 @@ export const Post = ({
 
       axiosInstance
         .get(urlAuthorScore, {
-          params: { userId : userId }
+          params: { userId: userId }
         })
         .then((response) => {
           setAuthorScore(response.data);
@@ -278,30 +274,30 @@ export const Post = ({
 
         {(userId === Number(localStorage.getItem("userId")) ||
           localStorage.getItem("isAdmin") === "true") && (
-          <div className="space-x-5">
-            {qstatus !== 2 && (
-              <EditPostButton
-                question={{
-                  id,
-                  title,
-                  text,
-                  qstatus,
-                  images: imageList,
-                  tags: tagList,
-                  handleEditPost: handleEditPost,
-                }}
-              />
-            )}
+            <div className="space-x-5">
+              {qstatus !== 2 && (
+                <EditPostButton
+                  question={{
+                    id,
+                    title,
+                    text,
+                    qstatus,
+                    images: imageList,
+                    tags: tagList,
+                    handleEditPost: handleEditPost,
+                  }}
+                />
+              )}
 
-            <Button
-              className="bg-red-500 text-white text-xl rounded-full"
-              size="sm"
-              onClick={handleDeletePost}
-            >
-              <MdDeleteOutline />
-            </Button>
-          </div>
-        )}
+              <Button
+                className="bg-red-500 text-white text-xl rounded-full"
+                size="sm"
+                onClick={handleDeletePost}
+              >
+                <MdDeleteOutline />
+              </Button>
+            </div>
+          )}
       </div>
     </div>
   );

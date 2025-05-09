@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from "./dialog";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { safeAxios } from "@/services/axiosInstance";
 import { MdDeleteOutline } from "react-icons/md";

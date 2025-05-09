@@ -1,10 +1,8 @@
 "use client";
 
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { Button } from "./button";
 import { CiMenuKebab } from "react-icons/ci";
 import { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
 import { useRouter } from "next/navigation";
 import { safeAxios } from "@/services/axiosInstance";
 import Link from "next/link";

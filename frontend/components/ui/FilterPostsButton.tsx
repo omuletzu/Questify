@@ -1,6 +1,5 @@
 "use client";
 
-import { AiOutlineSearch } from "react-icons/ai";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +11,6 @@ import { Input } from "./input";
 import { Checkbox } from "@mui/material";
 import { Button } from "./button";
 import { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { safeAxios } from "@/services/axiosInstance";
 import { CiFilter } from "react-icons/ci";

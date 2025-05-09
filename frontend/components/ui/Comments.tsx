@@ -1,13 +1,9 @@
 "use client";
 
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
-import { CiMenuKebab } from "react-icons/ci";
-import axios from "axios";
-import { useScrollTrigger } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { EditAnswerButton } from "./EditAnswerButton";
-import { title } from "process";
 import { Button } from "./button";
 import { safeAxios } from "@/services/axiosInstance";
 

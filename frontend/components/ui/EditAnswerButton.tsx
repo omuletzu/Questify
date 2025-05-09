@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from "./dialog";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { FaRegEdit } from "react-icons/fa";
 import { safeAxios } from "@/services/axiosInstance";

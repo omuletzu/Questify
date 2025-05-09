@@ -11,12 +11,10 @@ import {
   DialogTrigger,
 } from "./dialog";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { FaRegEdit } from "react-icons/fa";
 import { safeAxios } from "@/services/axiosInstance";
 import { MdDeleteOutline } from "react-icons/md";
-import { Images } from "lucide-react";
 
 interface Question {
   id: number;

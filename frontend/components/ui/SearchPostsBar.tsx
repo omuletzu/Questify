@@ -1,8 +1,6 @@
 "use client"
 
-import { useScrollTrigger } from "@mui/material"
 import { useState } from "react"
-import { AiOutlineSearch } from "react-icons/ai"
 
 interface searchProp {
     setSearchBarText : (text : string) => void

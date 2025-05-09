@@ -59,7 +59,6 @@ public class UserController {
     public ResponseEntity<String> getUsernameById(@RequestParam(name = "userId") Long userId) {
         Optional<Users> user = userService.getUserById(userId);
         return user.map(users -> ResponseEntity.ok(users.getUsername())).orElseGet(() -> ResponseEntity.badRequest().body("User not found"));
-
     }
 
     @GetMapping("/getByUsername")

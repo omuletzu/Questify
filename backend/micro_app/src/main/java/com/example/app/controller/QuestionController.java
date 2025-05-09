@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/question")
@@ -473,16 +474,19 @@ public class QuestionController {
         return ResponseEntity.ok("Success");
     }
 
-    //modificare
     @GetMapping("/getQuestionsByUserId")
-    public ResponseEntity<List<Question>> getQuestionsByUserId(@RequestParam(name = "userId") Long userId) {
+    public ResponseEntity<List<Long>> getQuestionsByUserId(@RequestParam(name = "userId") Long userId) {
         List<Question> questions = questionService.filterByUserId(userId);
     
         if (questions.isEmpty()) {
             return ResponseEntity.ok(Collections.emptyList());
         }
+
+        List<Long> questionListIds = questions.stream()
+                .map(Question::getId)
+                .toList();
     
-        return ResponseEntity.ok(questions);
+        return ResponseEntity.ok(questionListIds);
 }
 
 }

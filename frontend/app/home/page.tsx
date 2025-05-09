@@ -249,7 +249,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
               {displayFiltered
                 ? questionListFiltered.map((item, index) => (
                   <Post
-                    key={index}
+                    key={item}
                     id={item}
                     renderViewPostButton={true}
                     questionListIndex={index}
@@ -259,7 +259,7 @@ export default function ForumPage({ userId, userScore }: PostProps) {
                 ))
                 : questionListUnfiltered.map((item, index) => (
                   <Post
-                    key={index}
+                    key={item}
                     id={item}
                     renderViewPostButton={true}
                     questionListIndex={index}

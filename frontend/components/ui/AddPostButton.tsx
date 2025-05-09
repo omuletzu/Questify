@@ -184,6 +184,7 @@ export const AddPostButton = () => {
           <div className="h-[200px] flex items-center justify-center">
             <Button
               onClick={handleAddQuestion}
+              id="addQ"
               className="text-white px-4 py-2 rounded-md"
             >
               Add Question

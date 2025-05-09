@@ -55,14 +55,14 @@ export default function UserProfilePage() {
           questionListUnfiltered.concat(fetchedQuestions)
         );
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const updateQstatus = (qstatus: number) => {};
+  const updateQstatus = (qstatus: number) => { };
   const updateDeleteQuestion = (index: number) => {
     if (displayFiltered) {
       const newQuestionList = [...questionListFiltered];
@@ -122,9 +122,8 @@ export default function UserProfilePage() {
 
       <div className="flex flex-1 mt-16">
         <aside
-          className={`fixed left-0 h-full bg-gray-200 transition-all duration-300 ease-in-out ${
-            isOpen ? "w-[300px]" : "w-[50px]"
-          } overflow-y-auto`}
+          className={`fixed left-0 h-full bg-gray-200 transition-all duration-300 ease-in-out ${isOpen ? "w-[300px]" : "w-[50px]"
+            } overflow-y-auto`}
         >
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -173,38 +172,33 @@ export default function UserProfilePage() {
         </aside>
 
         <main
-          className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${
-            isOpen ? "ml-[300px]" : "ml-[50px]"
-          }`}
+          className={`flex-1 p-6 overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "ml-[300px]" : "ml-[50px]"
+            }`}
         >
-            <div className="p-4 flex justify-left gap-4">
-                <h1>{username}</h1>
-                <h1><ScoreLabel/></h1>
-            </div>
           <h1 className="font-bold text-2xl">Questions: </h1>
           <div className="mt-8">
             <div className="space-y-6">
               {displayFiltered
                 ? questionListFiltered.map((item, index) => (
-                    <Post
-                      key={item}
-                      id={item}
-                      renderViewPostButton={true}
-                      questionListIndex={index}
-                      updateQstatus={updateQstatus}
-                      updateDeleteQuestion={updateDeleteQuestion}
-                    />
-                  ))
+                  <Post
+                    key={item}
+                    id={item}
+                    renderViewPostButton={true}
+                    questionListIndex={index}
+                    updateQstatus={updateQstatus}
+                    updateDeleteQuestion={updateDeleteQuestion}
+                  />
+                ))
                 : questionListUnfiltered.map((item, index) => (
-                    <Post
-                      key={item}
-                      id={item}
-                      renderViewPostButton={true}
-                      questionListIndex={index}
-                      updateQstatus={updateQstatus}
-                      updateDeleteQuestion={updateDeleteQuestion}
-                    />
-                  ))}
+                  <Post
+                    key={item}
+                    id={item}
+                    renderViewPostButton={true}
+                    questionListIndex={index}
+                    updateQstatus={updateQstatus}
+                    updateDeleteQuestion={updateDeleteQuestion}
+                  />
+                ))}
             </div>
           </div>
         </main>

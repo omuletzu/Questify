@@ -95,6 +95,7 @@ export default function Home() {
             <DialogTrigger asChild>
               <Button
                 variant="loginBtn"
+                id="loginBtn"
                 size="huge2"
                 className="text-lg hover:bg-blue-700"
                 onClick={() => setIsSignUp(false)}
